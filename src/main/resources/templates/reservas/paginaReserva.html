@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCKiIqCdZGrVxx06LSbe7uG3zXOq1Cz5k&callback=initMap" async defer></script>
+<script th:src="@{/js/gmaps.js}"></script>
+<script th:src="@{/js/controles_front.js}"></script>
+<link rel="stylesheet" th:href="@{/bootstrap-4.5.2-dist/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+<link rel="stylesheet"	href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" />
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<link rel="stylesheet"	href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" />
+<link rel="stylesheet" type="text/css" href="/hotel-datepicker/dist/css/hotel-datepicker.css">
+<link rel="stylesheet" type="text/css" href="hotel-datepicker/dist/css/hotel-datepicker.css">
+<link rel="stylesheet" type="text/css" href="js/css/main.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title th:text="${nombreNegocio}"></title>
+
+<!-- Paypal -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
+
+</head>
+
+
+<body class="p-3 mb-2 bg-white">
+ <script
+    src="https://www.paypal.com/sdk/js?client-id=Afu-Ph1GhsJxeFue2113pUGlz4AQRQevNstQWN8q4oi8QgjH-eKAF36k_aIowF4dn_oja7RI_5KZ-S0D"> // Required. Replace SB_CLIENT_ID with your sandbox client ID.
+  </script>
+
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 text-dark">
+					<h1 class="mt-5" th:text="#{text.reserva.reserva}"></h1>
+				</div>
+			</div>
+			
+		</div>
+	</section>
+<hr />
+
+<div class="p-3 mb-2 text-dark">
+	<div class="container ">
+		<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+		    <li class="breadcrumb-item active" aria-current="page"><a th:href="@{'/publico/listar/'}" >Listado</a></li>
+		    <li class="breadcrumb-item active" aria-current="page"><a th:href="@{'/publico/galeria_publica/'+${piso.id}}" >Galeria</a></li>
+		    <li class="breadcrumb-item" aria-current="page">Reserva</li>
+		  </ol>
+		</nav>
+			<div class="row ">
+				<span id="mensaje"></span><br>
+					<div class="col">
+						<div class="card mb-2">
+							<div class="row no-gutters">
+								<div class="col-md-4 d-flex">
+									<img th:if="${#strings.length(foto.fotoImg) > 0}"
+										style="margin: 3px;" class="rounded card-img "
+										th:src="@{'/uploads/'+${foto.fotoImg}}"
+										th:alt="${foto.detalle}" />
+								</div>
+								
+								<div class="col-md-8">
+									<div class="card-body">
+										<h5 class="card-title mr-3" th:text="${piso.nombre}"></h5>
+										<p class="card-text" th:text="${piso.detalle}"></p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<h3 class="mt-5"  th:text="#{text.reserva.servicios}"></h3>
+						<div class="container">
+						<div class="row" th:each="servicio: ${piso.servicios}">
+							<div class="col-1">
+								<h2><i th:classappend="${servicio.icono}+' pt-2'"></i></h2>
+							</div>
+							<div class="col-8">
+							
+								<div th:switch="${locale}"> 
+									<span th:case="'ES'" class="font-weight-bolder" th:text="${servicio.nombreServicio}">A</span>
+									<span th:case="'EN'" class="font-weight-bolder" th:text="${servicio.nombreServicioEN}">B</span>
+									<span th:case="'FR'" class="font-weight-bolder" th:text="${servicio.nombreServicioFR}">C</span>
+									<span th:case="'DE'" class="font-weight-bolder" th:text="${servicio.nombreServicioDE}">D</span>
+								</div>
+								
+								<div th:switch="${locale}"> 
+									<p th:case="'ES'"  class="text-muted"  th:text="${servicio.descripcion}"></p>
+									<p th:case="'EN'"  class="text-muted"  th:text="${servicio.descripcionEN}"></p>
+									<p th:case="'FR'"  class="text-muted"  th:text="${servicio.descripcionFR}"></p>
+									<p th:case="'DE'"  class="text-muted"  th:text="${servicio.descripcionDE}"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<hr class="my-3">
+						<div class="col-lg-11">
+							<i class="fas fa-home"></i><span class="font-weight-bolder small" th:text="#{text.reserva.alojamiento}"></span>
+							<p class="text-muted small" th:text="#{text.reserva.alojamiento.texto}"></p>
+							<i class="fas fa-broom small"></i><span class="font-weight-bolder small" th:text="#{text.reserva.limpieza}">Servicio de limpieza</span>
+							<p class="text-muted small" th:text="#{text.reserva.limpieza.texto}"><a href="#" th:text="#{text.reserva.masinformacion}"></a></p>
+						</div>
+					</div>
+					
+				<form th:action="@{/reservas/crearReserva}" method="post">
+					<input type="hidden" name="id" id="id" th:value="${piso.id}"></input>
+					<div class="col">
+						<div class="card shadow rounded">
+							<div class="card-body">
+								 <h4><span id ="totalPrecio" name ="totalPrecio"  th:text="${totalPrecioParam != null} ? ${totalPrecioParam} : ''"></span>€ Total</h4>
+							<div class="card">
+									<div class="card-body">
+										<label for="demo11" class="row-sm-2 col-form-label"><h5 th:text="#{text.reserva.llegada.salida}"></h5></label>
+
+										<div class="form-group col-md-6" id="demo1-input-parent">
+											<input type="text" id="demo11" name="fechas">
+										</div>
+										<div class="mt-3" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_GESTOR','ROLE_USUARIO')">
+											
+											<h5 th:text="#{text.reserva.descuento}"></h5>
+											<div class="form-group col-md-6">
+												<input type="text" id="descuentoSend" name="descuentoSend" onChange= "descuentos()"/>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<table class="table table-bordered"></table>
+								
+								<button sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_GESTOR','ROLE_USUARIO')" type="submit" class="btn btn-secondary btn-lg btn-block" th:text="#{text.reserva.reservar}"></button>
+								<a sec:authorize="!hasAnyRole('ROLE_ADMIN','ROLE_GESTOR','ROLE_USUARIO')" href="#" data-toggle="modal" data-target="#registro" class="btn btn-secondary btn-lg btn-block" >test</a>
+								
+								<p class="text-muted" th:text="#{text.reserva.nopago}"></p>
+								<a href="#" data-toggle="modal" data-target="#detalle" th:text="#{text.reserva.detalle.noche}"></a>
+								<table class="table table-borderless">
+									<thead>
+										<tr>
+											<td><span th:text="#{text.reserva.tarifax}"></span><span id="noches"></span><span th:text="#{text.reserva.nochesx}"></span></td>
+											<td class="text-right" ><span id="total"></span><span th:text="#{text.reserva.total}"></span></td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_GESTOR','ROLE_USUARIO')">
+											<td  th:text="#{text.reserva.descuento.texto}"></td>
+											<td class="text-right">												
+												<span id="descuentoId"  th:text="${descuentoPromo  != null} ? ${descuentoPromo} : '0'" ></span><span id='valorDescuento'></span>
+												<span class="text-danger" id="errorPromoId" th:text="${errorPromo  != null} ? ${errorPromo} : ''"></span>
+											</td>
+										</tr>
+										
+										<tr>
+											<td th:text="#{text.reserva.tarifa.limpieza}"></td>
+											<td class="text-right" ><span th:text="#{text.mas}"></span><span id="tarifa" th:text="${piso.servicioLimpieza}" class="text-right"></span><span th:text="#{text.euro}"></span></td>
+										</tr>
+										<tr>
+											<td th:text="#{text.reserva.iva}"></td>
+											<td class="text-right"><span th:text="#{text.mas}"></span><span id="iva" class="text-right"></span><span th:text="#{text.euro}"></span></td>
+										</tr>
+										<tr>
+											<td><h4 th:text="#{text.reserva.total}"></h4></td>
+											<td class="text-right" id="totalABS"></td>
+										</tr>
+									</tbody>
+							</table>
+							<input type="hidden" name="preciototal" id="preciototal"></input>
+					</div>
+				</div>
+			</div>
+		</form>
+		</div>						
+	</div>
+</div>
+<!-- Modal con detalles -->
+<div class="modal fade" id="detalle" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel" th:text="#{text.reserva.desglose}">Desglose de precios</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<table id="desglosePrecios" name="desglosePrecios" class="table">
+					  <thead>
+					     <tr>
+					       <th scope="col" th:text="#{text.reserva.fecha}"></th>
+					       <th scope="col" th:text="#{text.reserva.precio}"></th>
+					     </tr>
+					   </thead>
+					   <p></p>
+						<tbody>
+							<tr th:each="desglosePrecios : ${desglosePreciosList}" >
+						 	   <td th:text="${desglosePrecios.key}"></td>
+						 	   <td th:text="${desglosePrecios.value}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		
+	<!-- Modal Login -->
+	<div class="modal fade" id="registro" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title">Sea parte de la comunidad</h5>
+				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				      </div>
+				      <div class="modal-body">
+				        <form th:action="@{/registro}" method="post" id="formCheckPassword">
+						  <div class="mb-3">
+						    <label for="exampleInputEmail1" class="form-label">Email address</label>
+						    <input type="email" class="form-control" id="username" name="username" aria-describedby="emailHelp">
+						  </div>
+						  <div class="mb-3">
+						    <label for="exampleInputPassword1" class="form-label">Password</label>
+						    <input type="password" class="form-control" id="password" name="password">
+						  </div>
+						  <div class="mb-3">
+						    <label for="exampleInputPassword1" class="form-label">Repita el Password</label>
+						    <input type="password" class="form-control" id="exampleInputPassword1">
+						  </div>
+						  <button type="submit" class="btn btn-primary">Registrame</button>
+						</form>
+				      </div>
+				      <div class="modal-footer">
+				      <div class="container">
+						  <div class="row">
+						    <div class="col my-1">
+						       <a data-bs-dismiss="modal" sec:authorize="!hasAnyRole('ROLE_ADMIN','ROLE_GESTOR','ROLE_USUARIO')" href="#" data-toggle="modal" data-target="#login" class="btn btn-secondary btn-lg btn-block" onClick="$(registro).hide();">Ya tengo una cuenta</a>
+						    </div>
+						  </div>
+						  <div class="row">
+						    <div class="col my-1">
+						    	 <a data-bs-dismiss="modal" sec:authorize="!hasAnyRole('ROLE_ADMIN','ROLE_GESTOR','ROLE_USUARIO')" href="#" data-toggle="modal" data-target="#google" class="btn btn-outline-secondary btn-lg btn-block"><img width="20px"  alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />Acceso con google</a>
+						  </div>
+						</div>
+					     <div class="row">
+							<div class="col my-1">
+								<a data-bs-dismiss="modal" sec:authorize="!hasAnyRole('ROLE_ADMIN','ROLE_GESTOR','ROLE_USUARIO')" href="#" data-toggle="modal" data-target="#facebook" class="btn btn-outline-primary btn-lg btn-block" ><img width="20px"  alt="Facebook" src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Facebook_logo_%28square%29.png" />Acceso con facebook</a>
+							</div>
+						</div>
+						</div>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+	<!-- Modal Login -->
+	<div class="modal fade" id="login" tabindex="-1" role="dialog" data-bs-dismiss="registro"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title">Iniciame</h5>
+				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				      </div>
+				      <div class="modal-body">
+				        <form th:action="@{/login}" method="post">
+						  <div class="mb-3">
+						    <label for="exampleInputEmail1" class="form-label">Email address</label>
+						    <input type="email" class="form-control" name="username" id="username" aria-describedby="emailHelp">
+						  </div>
+						  <div class="mb-3">
+						    <label for="exampleInputPassword1" class="form-label">Password</label>
+						    <input type="password" class="form-control" name="password" id="password">
+						  </div>
+						  <button type="submit" class="btn btn-primary">Login</button>
+						</form>
+				      </div>
+				      <div class="modal-footer">
+				        <span>Bienvenido de nuevo</span>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+
+</body>
+
+<div th:replace="layout/layout :: modalCondiciones"></div>
+<footer th:replace="layout/layout :: footer"></footer>
+<!-- Bootstrap core JavaScript -->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/hotel-datepicker/js/fecha.min.js}"></script>
+<script type="text/javascript" th:src="@{/hotel-datepicker/js/hotel-datepicker.min.js}"></script>
+<script type="text/javascript" th:src="@{/momentjs/downloads/moment.min.js}"></script>
+
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+ var totalAbs = 0;//Total absoluto con descuentos iva etc
+ var noches = 0; //recuento de noches
+ var promo =  /*[[${descuentoPromo}]]*/ 'descuentoPromo'; //valor de descuento, representa un %
+ var servicio = /*[[${piso.servicioLimpieza}]]*/ 'servicio'; //Precio servicio de limpieza
+ var iva = /*[[${iva}]]*/ 'iva'; //calculo del iva
+ var input1 = document.querySelector('#demo1-input-parent input');
+ var ocupados=  /*[[${ocupados}]]*/ 'ocupados';
+
+ 
+window.onload = function() {
+	var fechaIni = new Date( /*[[${fechaIni}]]*/ 'fechaInicio');
+	var fechaFin = new Date( /*[[${fechaFin}]]*/ 'fechaFin');
+	fechas(fechaIni,fechaFin);
+};
+
+//Carga el hotelDatepicker y pone las fechas, y los dias que esta ocupado
+function fechas(fechaIni,fechaFin){	
+
+	var demo1 = new HotelDatepicker(input1, {
+	    disabledDates: ocupados, enableCheckout: true
+	});
+	var noches = demo1.getNights();//numero de noches
+	
+	if(fechaIni.getTime()==fechaFin.getTime()){//si no hay fechas en la ruta ponemos hoy y mañana
+		fechaFin = fechaFin.setDate(fechaIni.getDate() + 1)	
+	}
+	input1.value = fecha.format(fechaIni, 'YYYY-MM-DD') + ' - '+ fecha.format(fechaFin, 'YYYY-MM-DD');
+	input1.addEventListener('afterClose', function() {
+		$("#noches").text(demo1.getNights());
+		totales();
+	}, false);
+	totales();
+}
+
+//si se agrega la promo directamente
+function descuentos(){
+		var url = "/reservas/ajax/promociones?promocion="+$("#descuentoSend").val();       
+	    $.get(url , function(htmlexterno){
+	    	 $("#descuentoId" ).html(htmlexterno);
+	    	 promo = $( "#descuentoId" ).text();
+	    	 $("#valorDescuento").text('');
+	   		 if(promo.includes('ERROR')){
+	   			$( "#errorPromoId" ).text(promo);
+	   		 	promo = 0;
+	   		 }else{
+	   			$( "#descuentoId" ).text('-'+promo+'%');
+	   		 }
+	   		totales();
+			});
+}
+
+function totales(){
+	var fechaArray = input1.value.split("-");
+	if (!(fechaArray[0]=="")){
+		var fachaIniSTR = fechaArray[0]+"-"+fechaArray[1]+"-"+fechaArray[2];
+		var fachaFinSTR = fechaArray[3]+"-"+fechaArray[4]+"-"+fechaArray[5];
+		var param ="?fechaIni="+fachaIniSTR+"&fechaFin="+fachaFinSTR+"&id="+$("#id").val();
+		var url = "/reservas/ajax/fechasPrecio"+param.replace(/ /g, "");
+	
+		$.get(url , function(htmlexterno){
+			 $( "#totalPrecio" ).html(htmlexterno);
+			 $( "#total" ).html(htmlexterno);
+			 //Total noches
+			 total = Math.floor(parseFloat($("#totalPrecio" ).text()));
+			 //Iva del total mas servicio
+			 ivaCalc = Math.floor(parseFloat ((total +servicio)*(iva/100)));
+			 //% de descuento
+			 if (isNaN(promo) || promo==null) {
+				 promo = 0;    // Se ejecuta
+			 }
+			 //total noches mas iva mas servicio
+			 totalAbs = Math.floor(parseFloat (total +servicio+ivaCalc));	
+			 if (promo != 0){
+				//total aplicando promo
+				$("#valorDescuento").text(' ('+Math.floor((totalAbs*(promo/100))).toFixed(2)+'€)');	
+				totalAbs = totalAbs-Math.floor((totalAbs*(promo/100)));				
+		     }
+			 $("#totalABS").text(totalAbs.toFixed(2));
+			 $("#preciototal").val(totalAbs.toFixed(2));		 
+			 $("#iva").text(ivaCalc.toFixed(2));
+		});
+		
+		var url = "/reservas/ajax/desglosePrecios"+param.replace(/ /g, "");
+		$.get(url , function(htmlexterno){
+			$('#desglosePrecios').html(htmlexterno);
+		});	 
+	}
+}
+
+//Si se agrega la promo escribiendo 
+$("#descuentoSend").on('keyup', function(){
+	 if($(this).val().trim().length > 5){
+		  	descuentos(); 
+	 }else if($(this).val().trim().length >= 6){
+		 $( "#errorPromoId" ).text('ERROR la promocion no existe o no esta activa, compruebe que no hay espacios y esta bien escrita');
+		 $("#valorDescuento").text('');
+		 promo = 0;
+	 }else if($(this).val().trim().length <= 5){
+		 $("#descuentoId" ).text('0');
+		 $("#valorDescuento").text('');
+		 promo = 0;
+	 }
+	 totales();
+}).keyup();
+
+/*]]>*/
+</script>

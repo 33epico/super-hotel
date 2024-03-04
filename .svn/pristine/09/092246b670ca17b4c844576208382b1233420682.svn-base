@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<style type="text/css">
+#contenido {
+	width: 80%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+</style>
+
+<head th:replace="layout/layout :: head"></head>
+
+
+<body class="p-3 mb-2 bg-dark">
+
+	<navigation th:replace="layout/public_layout :: navigation"></navigation>
+
+
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 text-white">
+					<h1 class="mt-5">Villa Lusitania</h1>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+						Deserunt voluptates rerum eveniet sapiente repellat esse,
+						doloremque quod recusandae deleniti nostrum assumenda vel beatae
+						sed aut modi nesciunt porro quisquam voluptatem.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	
+	<div class="col mb-4 bg-dark">
+		<span class="col-md-8" th:each="miniFoto: ${miniFotos}">
+
+			<div class="card mb-6">
+				<div class="row no-gutters">
+					<div class="col-md-4">
+					<a th:href="@{'/publico/galeria_publica/'+${miniFoto.piso.id}}">
+						<img th:if="${#strings.length(miniFoto.fotoImg) > 0}"
+							class="rounded float-Left card-img"
+							th:src="@{'/uploads/'+${miniFoto.fotoImg}}"
+							th:alt="${miniFoto.detalle}" /></a>
+					</div>
+					<div class="col-md-8">
+						<div class="card-body">
+							<h5 class="card-title" th:text="${miniFoto.piso.nombre}"></h5>
+							<p class="card-text" th:text="${miniFoto.piso.detalle}" ></p>
+							<p class="col-md-4 position-absolute fixed-bottom" >
+								<a class="text-primary"  th:href="@{'/reservas/listar/'+${miniFoto.piso.id}+'?fechaIni='+${fechaIni}+'&fechaFin='+${fechaFin}+'&ocupacion='+${ocupacion}}">Reservar </a> &nbsp&nbsp
+								<a th:href="@{'/publico/galeria_publica/'+${miniFoto.piso.id}+'?fechaIni='+${fechaIni}+'&fechaFin='+${fechaFin}+'&ocupacion='+${ocupacion}}"  class="text-primary">Galeria </a>&nbsp&nbsp 
+							    <a th:href="@{/publico/form/}+${miniFoto.piso.id}" class="text-danger" sec:authorize="hasRole('ROLE_ADMIN')">Editar </a>
+							</p>
+							<H4 class="text-right m-4 position-absolute fixed-bottom" th:text="${miniFoto.piso.tarifaBase}+'€ / Total'"></h4>
+								
+
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</span>
+	</div>
+</body>
+
+
+
+<footer th:replace="layout/layout :: footer"></footer>
+</body>

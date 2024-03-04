@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<link rel="stylesheet" th:href="@{/bootstrap-4.5.2-dist/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
+	<meta charset="utf-8">
+	
+
+<title th:text="${nombreNegocio}"></title>
+
+</head>
+
+
+<body class="p-3 mb-2 bg-white">
+	<div class="p-3 mb-2 text-dark">
+		<div class="container ">
+			<div class="row ">
+				<span id="mensaje"></span><br>
+						<div class="col">
+							<div class="card shadow rounded">
+								<div class="card-body">
+								<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+								  <ol class="breadcrumb">
+								    <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+								    <li class="breadcrumb-item active" aria-current="page"><a th:href="@{'/publico/listar/'}" >Listado</a></li>
+								    <li class="breadcrumb-item active" aria-current="page"><a th:href="@{'/publico/galeria_publica/'+${piso.id}}" >Galeria</a></li>
+								    <li class="breadcrumb-item" aria-current="page">Reserva</li>
+								  </ol>
+								</nav>
+								<table class="table table-borderless"></table>
+									<div class="card mb-2">
+										<div class="row no-gutters">
+											<div class="col-md-4 d-flex">
+												<img th:if="${#strings.length(foto.fotoImg) > 0}"
+													style="margin: 3px;" class="rounded card-img "
+													th:src="@{'/uploads/'+${foto.fotoImg}}"
+													th:alt="${foto.detalle}" />
+											</div>
+											<div class="col-md-8">
+												<div class="card-body">
+													<h5 class="card-title mr-3" th:text="${piso.nombre}"></h5>
+													<p class="card-text" th:text="${piso.detalle}"></p>
+													</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								
+								<div class="col-12">
+									<h3 class="mt-4 font-weight-bolder">Tu reserva</h3>
+							
+									<div class="row" id="reservaResumen">
+									    <div class="col-12">
+											<span class="font-weight-bolder"th:text="#{text.recibo.localizador}"></span><span th:text="${': '+reserva.codigoReserva}"></span>
+										</div>
+										<div class="col-4">
+											<span class="font-weight-bolder">Llegada:</span>
+											<span th:text="${#dates.format(reserva.fechaInicio, 'dd-MMM-yyyy')+' 12:00:00'}"></span>
+										</div>
+										<div class="col-4">
+											<span class="font-weight-bolder">Salida:</span>
+											<span th:text="${#dates.format(reserva.fechaFin, 'dd-MMM-yyyy')+' 12:00:00'}"></span>
+										</div>
+										<div class="col-4">
+											<span class="font-weight-bolder">Total Noches:</span>
+											<span th:text="${noches}"></span>
+										</div>
+										
+				                    </div>
+									
+							<table class="table table-borderless"></table>
+	
+									<table class="table table-borderless">
+										<thead>
+											<tr>
+												<td class="border-top-0 font-weight-bolder" ></td>
+												<td class="border-top-0 "></td>
+											</tr>
+											<tr>
+												<td><span th:text="#{text.recibo.total}"></span></td>
+												<td class="text-right" >+<span th:text="${reserva.precioCalculado}"></span>€</td>
+											</tr>
+										</thead>
+										<tbody>
+											<tr >
+												<td th:text="#{text.reserva.descuento.texto}"></td>
+												<td class="text-right">												
+													<span>-</span><span id="descuentoId"  th:text="${reserva.descuentoCalculado  != null} ? ${reserva.descuentoCalculado} : '0'" ></span><span id='valorDescuento'></span>
+											    </td>
+											</tr>
+											
+											<tr>
+												<td th:text="#{text.reserva.tarifa.limpieza}"></td>
+												<td class="text-right" >+<span th:text="${reserva.servicioLimpieza}"></span><span id="tarifa"></span><span th:text="#{text.euro}"></span></td>
+											</tr>
+											<tr>
+												<td th:text="#{text.reserva.iva}"></td>
+												<td class="text-right"><span th:text="#{text.mas}"></span><span th:text="${reserva.ivaCalculado}" class="text-right"></span><span th:text="#{text.euro}"></span></td>
+											</tr>
+											<tr>
+												<td><h4 th:text="#{text.reserva.total}"></h4></td>
+												<td class="text-right"><span th:text="${reserva.precioPagar}"></span></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</body>
+</html>

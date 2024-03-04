@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<link
+	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
+
+<link
+	href="https://fonts.googleapis.com/css?family=Lobster&display=swap"
+	rel="stylesheet">
+
+<link rel="stylesheet" type="text/css"
+	href="/hotel-datepicker/dist/css/hotel-datepicker.css">
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" />
+
+
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>VILU - Villa Lusitania</title>
+
+<!-- Bootstrap core CSS -->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="css/the-big-picture.css" rel="stylesheet">
+
+<link rel="stylesheet" type="text/css"
+	href="hotel-datepicker/dist/css/hotel-datepicker.css">
+<link rel="stylesheet" type="text/css" href="js/css/main.css">
+</head>
+
+
+<body class="p-3 mb-2 bg-white">
+
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 text-dark">
+					<h1 class="mt-5">Confirmar Reserva</h1>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<hr />
+
+
+	<div class="p-3 mb-2 text-dark">
+		<div id="paypal-button-container"></div>
+<script src="https://www.paypal.com/sdk/js?client-id=sb&currency=EUR" data-sdk-integration-source="button-factory"></script>
+<script>
+  paypal.Buttons({
+      style: {
+          shape: 'pill',
+          color: 'blue',
+          layout: 'vertical',
+          label: 'checkout',
+          
+      },
+      createOrder: function(data, actions) {
+          return actions.order.create({
+              purchase_units: [{
+                  amount: {
+                      value: '1'
+                  }
+              }]
+          });
+      },
+      onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+              alert('Transaction completed by ' + details.payer.name.given_name + '!');
+          });
+      }
+  }).render('#paypal-button-container');
+</script>
+	</div>
+
+</body>
+
+
+
+<footer th:replace="layout/layout :: footer"></footer>
+
+
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script type="text/javascript"
+	src="http://lopezb.com/hoteldatepicker/js/fecha.min.js"></script>
+<script type="text/javascript"
+	src="http://lopezb.com/hoteldatepicker/js/hotel-datepicker.min.js"></script>
+
+
+
+<script type="text/javascript"
+	src="http://lopezb.com/hoteldatepicker/js/fecha.min.js"></script>
+<script type="text/javascript"
+	src="http://lopezb.com/hoteldatepicker/js/hotel-datepicker.min.js"></script>
+<script type="text/javascript"
+	 src="http://momentjs.com/downloads/moment.min.js"></script>
+
+
+</body>

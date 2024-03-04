@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+
+<body>
+
+	<div th:replace="layout/public_layout :: navigation"></div>
+
+
+	<div class="container py-4">
+
+		<div class="card bg-light">
+			<div class="card-header"><h3 class="font-weight-bold">Mensajes Leidos</h3></div>
+			<div class="card-body">
+
+				<h4 class="card-tittle">
+					<a th:href="@{/mensajes/nuevo}" class="btn btn-primary btn-xs"> Nuevo Mensaje</a>
+					<a th:href="@{/mensajes/noLeidos?tipoMSG=0}" class="btn btn-primary btn-xs">No Leidos</a>
+					<a th:href="@{/mensajes/leidos?tipoMSG=1}" class="btn btn-primary btn-xs">Leidos</a>
+				</h4>
+					
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th th:text="#{text.mensajes.fecha}"></th>
+							<th th:text="#{text.mensajes.de}"></th>
+							<th th:text="#{text.mensajes.asunto}"></th>
+							<th th:text="#{text.mensajes.noleido}"></th>
+							<th th:text="#{text.mensajes.borrar}"></th>
+						</tr>
+					</thead>
+					
+					
+					
+					<tbody>
+						<!-- con th:each recorremos los objetos que trameos de la bdd -->
+						<tr th:each="mensaje: ${mensajes}">
+							<td class="font-weight-bold"><a href="#" data-toggle="modal" data-target="#detalle" th:onclick="|despliegueMensaje('${mensaje.id}')|"   th:text="${mensaje.createAt}"></a></td>
+							<td class="font-weight-bold"><a href="#" data-toggle="modal" data-target="#detalle" th:onclick="|despliegueMensaje('${mensaje.id}')|"  th:text="${mensaje.piso.usuario.username}+' ('+${mensaje.piso.nombre}+')'"></a></td>
+							<td class="font-weight-bold"><a href="#" data-toggle="modal" data-target="#detalle" th:onclick="|despliegueMensaje('${mensaje.id}')|"  th:text="${mensaje.asunto}"></a></td>
+							<td><a class="btn btn-success btn-xs" th:href="@{/mensajes/leidos?tipoMSG=1&idMsgLeido=}+${mensaje.id}"  th:text="X"></a></td>
+							<td><a class="btn btn-danger btn-xs" th:href="@{/mensajes/eliminar/}+${mensaje.id}"  th:text="X" onclick="return confirm('Esta seguro que quiere eliminar');"></a></td>
+						</tr>
+					</tbody>
+				</table>
+				 <nav th:replace="paginator-nav :: paginator"></nav> 
+			</div>
+		</div>
+	</div>
+	
+	
+		
+	<div class="modal fade" id="detalle" tabindex="-1" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content" id="mensajeTexto" name="mensajeTexto">
+	      <div class="modal-header">
+	        <h3 class="modal-title"><span class="font-weight-bold" th:text="${mensajeTextoMSG.asunto != null} ? ${mensajeTextoMSG.asunto} : 'null value!'"></span> </h3>
+	      </div>
+	      <div class="modal-body">
+	      	<span class="font-weight-bold"> De: </span> <span  th:text="${mensajeTextoMSG.usuarioPiso != null} ? ${mensajeTextoMSG.usuarioPiso+'    '} : 'sin asunto '"></span>
+	        
+	        <p th:text="${mensajeTextoMSG.mensaje != null} ? ${mensajeTextoMSG.mensaje} : 'null value!'"></p>
+		  </div>
+	    </div>
+	  </div>
+	</div>
+	
+	
+		
+<footer th:replace="layout/layout :: footer"></footer>
+
+</body>
+<script th:inline="javascript">
+function despliegueMensaje(id){
+	
+	var param ="?id="+id;
+	var url = "/mensajes/ajax/detalleMensaje"+param.replace(/ /g, "");
+	$.get(url , function(htmlexterno){
+		$('#mensajeTexto').html(htmlexterno);
+	});	 
+	
+	
+}
+
+</script>
+
+</html>

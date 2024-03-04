@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+</head>
+
+
+<body class="p-3 mb-2 bg-white">
+	<div class="p-3 mb-2 text-dark">
+		<div class="container ">
+			<div class="row ">
+				<span id="mensaje"></span><br>
+						<div class="col">
+						
+								<div class="card shadow rounded">
+								<div class="card-body">
+								
+								<div class="col-12">
+									<h2 class="mt-4 font-weight-bolder">Tu reserva</h2>
+							
+									<div class="row">
+									   <div class="col-4">
+											<p class="mt-4 font-weight-bolder">Localizador:</p>
+											<span th:text="${recibo.codigo}"></span>
+										</div>
+										 <div class="col-4">
+											<span class="mt-4 font-weight-bolder">Detalle:</span>
+											<span th:text="${recibo.detalle}"></span>
+										</div>
+				                    </div>
+	
+									<table class="table">
+										<thead>
+											<tr>
+												<td><span th:text="#{text.recibo.total+' + servicios'}"></span></td>
+												<td class="text-right" >+<span th:text="${recibo.precioCalculado}"></span>€</td>
+											</tr>
+										</thead>
+										<tbody>
+											<tr >
+												<td th:text="#{text.reserva.descuento.texto}"></td>
+												<td class="text-right">												
+													<span>-</span><span id="descuentoId"  th:text="${recibo.descuentoCalculado  != null} ? ${recibo.descuentoCalculado} : '0'" ></span><span id='valorDescuento'></span>
+											    </td>
+											</tr>
+											<tr>
+												<td th:text="#{text.reserva.iva}"></td>
+												<td class="text-right"><span th:text="#{text.mas}"></span><span th:text="${recibo.ivaCalculado}" class="text-right"></span><span th:text="#{text.euro}"></span></td>
+											</tr>
+											<tr>
+												<td><h4 th:text="#{text.reserva.total}"></h4></td>
+												<td class="text-right"><span th:text="${recibo.precioPagar}"></span></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+	<!-- Bootstrap core JavaScript -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+</body>
+</html>

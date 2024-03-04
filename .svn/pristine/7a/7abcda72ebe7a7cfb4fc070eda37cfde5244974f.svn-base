@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container py-4">
+		<div class="card bg-light">
+			<div class="card-header">
+				<h3>Configuración</h3>
+			</div>
+
+			<div class="container py-4">
+				<div class="card">
+					<h5 class="card-header">Configuracion Email</h5>
+					<div class="card-body">
+						<form th:action="@{../administracion/guardarconfiguracionmail}" method="GET">
+							<div class="form-group row">
+								<label for="host" class="col-sm-2 col-form-label">Host:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="host"
+										name ="host" th:value="${host}" placeholder="mail.smtp.host">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="port" class="col-sm-2 col-form-label">Port:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="port" name ="port"
+										th:value="${port}" placeholder="mail.smtp.port">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="auth" class="col-sm-2 col-form-label">SMTP Auth:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="auth" name ="auth"
+										th:value="${auth}" placeholder="mail.smtp.auth">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="starttls" class="col-sm-2 col-form-label">Starttls Enable:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="starttls" name="starttls"
+										th:value="${starttls}" placeholder="mail.smtp.starttls.enable">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="emailReservas" class="col-sm-2 col-form-label">Mail Reservas:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="emailReservas" name="emailReservas"  th:value="${emailReservas}" placeholder="Mail para envio de reservas...">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="emailReservaspw" class="col-sm-2 col-form-label">Password:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="emailReservaspw" name="emailReservaspw" th:value="${emailReservaspw}" placeholder="Password mail de reservas...">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="emailmailing" class="col-sm-2 col-form-label">Mail para Mailing:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="emailmailing" name="emailmailing" th:value="${emailmailing}" placeholder="Mail para el mailing...">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="emailmailingpw" class="col-sm-2 col-form-label">Password:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="emailmailingpw" name ="emailmailingpw" th:value="${emailmailingpw}" placeholder="Password mail para mailing...">
+								</div>
+							</div>
+							<input type="submit" class="btn btn-primary" />
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+
+</body>

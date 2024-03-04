@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<div th:replace="layout/public_layout :: navigation"></div>
+
+	<div class="container py-4">
+		<div class="card bg-light">
+
+			<nav>
+				<div class="nav nav-tabs" id="nav-tab" role="tablist">
+					<a class="nav-item nav-link active" id="nav-home-tab"
+						data-toggle="tab" href="#nav-home" role="tab"
+						aria-controls="nav-home" aria-selected="true">Activas</a> <a
+						class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
+						href="#nav-profile" role="tab" aria-controls="nav-profile"
+						aria-selected="false">Pendientes</a> <a class="nav-item nav-link"
+						id="nav-reserva-tab" data-toggle="tab" href="#nav-reserva"
+						role="tab" aria-controls="nav-reserva" aria-selected="false">Histórico</a>
+				</div>
+			</nav>
+
+
+			<!--Reservas activas -->
+
+			<div class="tab-content">
+				<div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+					aria-labelledby="nav-home-tab">
+
+					<div class="container py-4">
+						<h2 class="text-left">Reservas activas</h2>
+					</div>
+					<div class="container py-4">
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">Id</th>
+									<th scope="col">Piso</th>
+									<th scope="col">Estado Reserva</th>
+									<th scope="col">Check in</th>
+									<th scope="col">Check out</th>
+									<th scope="col">Usuario</th>
+									<th scope="col">Servicios</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th><a class="btn btn-primary btn-xs text-white" href="#"
+										th:text="1"></a></th>
+									<td>Casa Julio</td>
+									<td>
+										<div class="progress">
+											<div class="progress-bar progress-bar-striped bg-success"
+												role="progressbar" style="width: 25%" aria-valuenow="25"
+												aria-valuemin="0" aria-valuemax="100"></div>
+										</div>
+									</td>
+									<td>20/10/2020 12:00</td>
+									<td>24/10/2020 12:00</td>
+									<td><a href="#" data-toggle="modal"
+										data-target="#exampleModal"> Juan Perez </a></td>
+									<td><a class="btn btn-danger btn-xs" href="#"
+										th:text="Servicios"></a></td>
+								</tr>
+								<tr>
+									<th><a class="btn btn-primary btn-xs text-white" href="#"
+										th:text="2"></a></th>
+									<td>Casa Adriana</td>
+									<td>
+										<div class="progress">
+											<div class="progress-bar progress-bar-striped bg-success"
+												role="progressbar" style="width: 50%" aria-valuenow="50"
+												aria-valuemin="0" aria-valuemax="100"></div>
+										</div>
+									</td>
+									<td>18/10/2020 12:00</td>
+									<td>24/10/2020 12:00</td>
+									<td><a href="#" data-toggle="modal"
+										data-target="#exampleModal2"> Antonio Martinez </a></td>
+									<td><a class="btn btn-danger btn-xs" href="#"
+										th:text="Servicios"></a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+
+
+
+
+
+
+
+				<!--Reservas pendientes -->
+
+				<div class="tab-pane fade" id="nav-profile" role="tabpanel"
+					aria-labelledby="nav-profile-tab">
+					<div class="container py-4">
+						<h2 class="text-left">Reservas Pendientes</h2>
+					</div>
+					<div class="container py-4">
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">id</th>
+									<th scope="col">Piso</th>
+									<th scope="col">Check in</th>
+									<th scope="col">Check out</th>
+									<th scope="col">Usuario</th>
+									<th scope="col">Servicios</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th><a class="btn btn-primary btn-xs text-white" href="#"
+										th:text="1"></a></th>
+									<td>Casa Julio</td>
+									<td>20/10/2020 12:00</td>
+									<td>24/10/2020 12:00</td>
+									<td><a href="#" data-toggle="modal"
+										data-target="#exampleModal"> Juan Perez </a></td>
+									<td><a class="btn btn-danger btn-xs" href="#"
+										th:text="Servicios"></a></td>
+								</tr>
+								<tr>
+									<th><a class="btn btn-primary btn-xs text-white" href="#"
+										th:text="2"></a></th>
+									<td>Casa Adriana</td>
+									<td>18/10/2020 12:00</td>
+									<td>24/10/2020 12:00</td>
+									<td><a href="#" data-toggle="modal"
+										data-target="#exampleModal2"> Antonio Martinez </a></td>
+									<td><a class="btn btn-danger btn-xs" href="#"
+										th:text="Servicios"></a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="tab-pane fade" id="nav-reserva" role="tabpanel"
+					aria-labelledby="nav-reserva-tab">
+					<div class="container py-4">
+						<h2 class="text-left">Historico de Reservas</h2>
+					</div>
+					<div class="container py-4">
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">id</th>
+									<th scope="col">Piso</th>
+									<th scope="col">Check in</th>
+									<th scope="col">Check out</th>
+									<th scope="col">Usuario</th>
+									<th scope="col">Ingreso</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th scope="row">1</th>
+									<td>Mark</td>
+									<td>Otto</td>
+									<td>@mdo</td>
+									<td>@mdo</td>
+									<td>@mdo</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Datos de
+							contacto</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<table class="table table-sm">
+						<tbody>
+							<tr>
+								<th scope="row">Nombre</th>
+								<td>Juan Perez</td>
+							</tr>
+							<tr>
+								<th scope="row">Teléfono:</th>
+								<td>+34 677877655</td>
+							</tr>
+							<tr>
+								<th scope="row">Email:</th>
+								<td>demomail@gmail.com</td>
+							</tr>
+							<tr>
+								<th scope="row">País:</th>
+								<td>Spain</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Datos de
+							contacto</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<table class="table table-sm">
+						<tbody>
+							<tr>
+								<th scope="row">Nombre</th>
+								<td>Antonio Martinez</td>
+							</tr>
+							<tr>
+								<th scope="row">Teléfono:</th>
+								<td>+34 677877655</td>
+							</tr>
+							<tr>
+								<th scope="row">Email:</th>
+								<td>demomail@gmail.com</td>
+							</tr>
+							<tr>
+								<th scope="row">Pais:</th>
+								<td>Spain</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>

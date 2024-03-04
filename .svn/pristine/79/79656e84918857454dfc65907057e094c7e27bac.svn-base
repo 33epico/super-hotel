@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<div th:replace="layout/public_layout :: navigation"></div>
+
+	<div class="container py-4">
+		<div class="card bg-dark text-white">
+
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+
+				<div th:object="${tarifa}" th:remove="tag">
+					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+						role="alert">
+						<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+					</ul>
+				</div>
+
+				<form th:action="@{/tarifa/editor}" th:object="${tarifa}"
+					method="post" enctype="multipart/form-data">
+
+
+					<div class="form-row">
+						<div class="col-md-4 mb-3">
+							<label class="col-sm-5 col-form-label">Detalle</label> <input
+								type="text" th:field="*{detalle}" class="form-control" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('detalle')}" th:errors="*{detalle}"></small>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="col-md-4 mb-3">
+							<label class="col-sm-5 col-form-label">Fecha Inicio</label> <input
+								type="date" th:field="*{fechaInicio}" class="form-control" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('fechaInicio')}"
+								th:errors="*{fechaInicio}"></small>
+
+						</div>
+
+						<div class="col-md-4 mb-3">
+							<label class="col-sm-5 col-form-label">Fecha Fin</label> <input
+								type="date" th:field="*{fechaFin}" class="form-control" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('fechaFin')}" th:errors="*{fechaFin}"></small>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="col-md-4 mb-3">
+							<label class="col-sm-5 col-form-label">Tarifa Base</label> <input
+								type="text" th:text="*{tarifaBase}" class="form-control"
+								disabled /> <input type="hidden" th:field="*{tarifaBase}"
+								class="form-control" /> <small class="form-text text-danger"
+								th:if="${#fields.hasErrors('tarifaBase')}"
+								th:errors="*{tarifaBase}"></small>
+						</div>
+
+						<div class="col-md-4 mb-3">
+							<label class="col-sm-8 col-form-label">Tarifa Temporada</label> <input
+								type="text" th:field="*{tarifaNueva}" class="form-control" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('tarifaNueva')}"
+								th:errors="*{tarifaNueva}"></small>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox"
+								th:field="*{activa}">
+							
+						
+								
+								 <label class="form-check-label"
+								for="gridCheck"> Activa </label></small>
+						</div>
+					</div>
+
+
+					<button class="btn btn-primary" type="submit">Añadir
+						Tarifa</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="container py-4">
+		<table class="table table-sm">
+			<thead>
+				<tr>
+					<th scope="col">#id</th>
+					<th scope="col">Detalle</th>
+					<th scope="col">Fecha Inicio</th>
+					<th scope="col">Fecha Fin</th>
+					<th scope="col">Tarifa Base</th>
+					<th scope="col">Tarifa Temporal</th>
+					<th scope="col">Activa</th>
+				</tr>
+			</thead>
+			<tbody>
+
+
+				<tr th:class="${cadaTarifa.activa} ? 'table-success' : 'table-secondary'"  th:each="cadaTarifa: ${listaTarifas}">
+
+					<td th:text="${cadaTarifa.id}"></td>
+					<td th:text="${cadaTarifa.detalle}"></td>
+					<td th:text="${cadaTarifa.fechaInicio}"></td>
+					<td th:text="${cadaTarifa.fechaFin}"></td>
+					<td th:text="${cadaTarifa.tarifaBase}"></td>
+					<td th:text="${cadaTarifa.tarifaNueva}"></td>
+					<td th:text="${cadaTarifa.activa}"></td>
+				</tr>
+
+			</tbody>
+		</table>
+	</div>
+
+
+	<footer th:replace="layout/layout :: footer"></footer>
+
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+NotEmpty.piso.nombre= El nombre del piso es requerido
+NotEmpty.piso.calle= La calle es requerida
+NotEmpty.piso.persona= El numero de personas es requerida
+NotEmpty.piso.pisoAltura= El numero de piso es requerido
+NotEmpty.piso.numero= El numero de portal es requerido
+NotEmpty.piso.habitaciones= Es necesario el numero de habitaciones
+NotNull.piso.personas= Es necesario el numero de ocupantes máximo
+NotNull.piso.createAt= La fecha no puede ser nula
+@NotNull.piso.tarifaBase=Es imprescindible una tarifa base
+
+NotEmpty.usuario.username=El usuario es requerido
+
+@NotNull.tarifa.detalle= Es necesario identificar la tarifa
+@NotNull.tarifa.fechaInicio= Es necesario poner una fecha de inicio para la tarifa
+@NotNull.tarifa.fechaFin= Es necesario poner una fecha de finalizacion para la tarifa
+@NotNull.tarifa.tarifaNueva= Es necesario indicar un precio para esta tarifa
+
+text.portada.empresa=Via Lusitania
+text.portada.presentacion=Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt voluptates rerum eveniet sapiente repellat esse, doloremque quod recusandae deleniti nostrum assumenda vel beatae sed aut modi nesciunt porro quisquam voluptatem.
+
+#gestion
+#listar
+text.piso.nombre=Name
+text.piso.direccion=Address
+text.piso.poblacion=City
+text.piso.habitaciones=Rooms
+text.piso.activo=Active
+text.piso.fotos=Image
+text.piso.editar=Edit
+text.piso.borrar=Delete
+text.piso.error=Ha habido un error
+
+#Parte publica
+#comunes
+text.empresa=Villa Lusitania
+url.blog=www.google.com
+url.contacto=www.google.com
+
+#navegacion publica
+text.menup.inicio=Home
+text.menup.pisos= Apartments
+text.menup.blog= Blog
+text.menup.contacto= Contact
+text.menup.gestion= Manage
+text.menup.administracion= Administration
+
+#index
+text.index.slogan=Make a booking and enjoy the experience
+text.index.fecha=CHECK IN - CHECK OUT
+text.index.buscar=SHEARCH
+text.index.ocupacion=ADULTS
+text.index.cuenta=Do you have an account?
+text.index.inicie=Login or Register
+
+
+#boton idioma
+text.locale.languaje=Languaje
+text.locale.de=Germany
+text.locale.en=English
+text.locale.es=Spanish
+text.locale.fr=French
+
+#ListadoMapas
+text.mapa.tarifaBase=Base price
+text.mapa.tarifas=Price
+text.mapa.tarifa=Price
+text.mapa.inicio=Start
+text.mapa.fin=End
+text.mapa.condiciones=Terms of service
+text.mapa.cancelacion=Cancellation policy
+text.mapa.reservar=Booking
+text.mapa.galeria=Gallery
+text.mapa.noche=€/per nigth
+
+#Galeria
+text.galeria.anfitrion=Anfitri\u00f3n
+
+#Creacion de reservas
+text.reserva.reserva=Your booking
+text.reserva.servicios=Services
+text.reserva.alojamiento=  Alojamiento completo
+text.reserva.alojamiento.texto=Dispondr\u00e1s del alojamiento completo para ti
+text.reserva.limpieza=Servicio de limpieza
+text.reserva.limpieza.texto=Nuestros apartamentos se higienizan siguiendo el mas estricto protocolo de seguridad e higiene.
+text.reserva.masinformacion=M\u00e1s informaci\u00f3n
+text.reserva.llegada.salida=LLEGADA - SALIDA
+text.reserva.descuento=¿Tiene un codigo descuento?
+text.reserva.nopago=No se har\u00e1 ning\u00fan cargo por el momento
+text.reserva.detalle.noche=Detalle por noche
+text.reserva.tarifax=Tarifa x 
+text.reserva.nochesx=noches
+text.reserva.reservar=Reservar
+text.reserva.total=Total
+text.reserva.descuento.texto=Descuento
+text.reserva.tarifa.limpieza=Tarifa Limpieza
+text.reserva.iva=I.V.A.
+text.reserva.fecha=Fecha
+text.reserva.precio=Precio
+text.reserva.desglose=Desglose de precios
+
+#Mensajes
+text.mensajes.fecha.en=Fecha
+text.mensajes.de.en=De
+text.mensajes.asunto.en=Asunto
+text.mensajes.notificacion.en=Mensajes
+text.mensajes.noleido.en=Marcar no leido
+text.mensajes.leido.en=Marcar como leido
+text.mensajes.borrar.en=Borrar
+
+#usuario
+text.usuario.email=Email
+text.usuario.contrasena=Contraseña
+text.usuario.nombre=Nombre
+text.usuario.apellidos=Apellidos
+text.usuario.fecha=Fecha de nacimiento
+text.usuario.direccion=Dirección
+text.usuario.telefono=Télefono
+error.usuario.repetido.en=Ese nombre de usuario ya está siendo utilizado
+
+#Listado
+text.listado.nopisos.en=No hay pisos disponibles en estas fechas
+
+#peticiones
+peticion.reserva.mensaje.cancelacion.en="La respuesta a la petición de cancelación se hará en 24 o 48 horas"
+
+error.reserva.nologing.en= Please register or sing in to make a booking
+error.reserva.nopisos.en=There are no apartments availabla
+error.reserva.generico.en=An error happended
+error.reserva.promo.en=ERROR the promotion does not exist or is old, check how you whrite it
+error.reserva.novalida.en=ERROR the apartament is busy in the selected date

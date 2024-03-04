@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link href="/vilu/src/main/resources/static/bootstrap-4.5.2-dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<head th:replace="layout/layout :: head">
+
+</head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container py-4">
+	
+	<ul th:if="${mensaje != null}" class="alert alert-warning alert-dismissible fade show" role="alert">
+		<li th:text="${mensaje}"></li>
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		    <span aria-hidden="true">&times;</span>
+		 </button>
+	</ul>
+
+		<div class="card bg-light">
+		<nav>
+			<div class="nav nav-tabs" id="nav-tab" role="tablist">
+				<a class="nav-item nav-link active" id="nav-users-tab" data-toggle="tab" href="#nav-users" role="tab" aria-controls="nav-users" aria-selected="true">Permisos de usuarios</a> 
+				<a class="nav-item nav-link" id="nav-config-tab" data-toggle="tab" href="#nav-config" role="tab" aria-controls="nav-config" aria-selected="false">Personalización</a>
+				<a class="nav-item nav-link" id="nav-norma-tab" data-toggle="tab" href="#nav-norma" role="tab" aria-controls="nav-norma" aria-selected="false">Normas</a>
+				<a class="nav-item nav-link" id="nav-promo-tab" data-toggle="tab" href="#nav-promo" role="tab" aria-controls="nav-promo" aria-selected="false">Promociones</a>
+			</div>
+		</nav>
+		
+		<div class="tab-content" id="nav-tabContent">
+		
+		<!-- Tab de busqueda de usuarios -->
+		
+				<div class="tab-pane fade show active" id="nav-users" role="tabpanel" aria-labelledby="nav-users-tab">
+				
+					<div class="card">
+						<div class="card-header">
+							<h1>BUSCADOR USUARIOS</h1>
+						</div>
+						<div class="card-body">
+							<div id="container">
+								<div class="content">
+									<div class="search">
+										<input class="form-control" type="text" id="busqueda" placeholder="Buscar ..."> <i class="fa fa-search"></i>
+									</div>
+									
+									<table class="table">
+										<caption>Lista de usuarios</caption>
+										<thead>
+											<tr>
+												<th scope="col">NOMBRE USUARIO</th>
+												<th scope="col">CLIENTE</th>
+												<th scope="col">GESTOR</th>
+												<th scope="col">SERVICIO</th>
+												<th scope="col">ADMINISTRADOR</th>
+												<th scope="col">ACTUALIZAR</th>
+											</tr>
+										</thead>
+										<tbody>
+										
+											<tr th:each="role: ${roles}">
+											<form th:action="@{/administracion/usuarios/}" method="get">
+												
+											<th ><input type="text" readonly th:value="${role.usuario}" name="username" id="username" class="form-control" placeholder="Usuario" /></th>
+											<td align="center"><input type="checkbox" class="form-check-input" id="cliente" name="cliente" th:checked="${role.cliente}"/></td> 
+											<td align="center"><input type="checkbox" class="form-check-input" id="gestor" name="gestor" th:checked="${role.gestor}" /></td>
+											<td align="center"><input type="checkbox" class="form-check-input" id="servicio" name="servicio" th:checked="${role.servicio}" /></td> 
+											<td align="center"><input type="checkbox" class="form-check-input" id="administrador" name="administrador" th:checked="${role.admin}" /></td> 
+											<td><input type="submit" class="btn btn-lg btn-primary btn-block" value="Actualizar" /></td>
+											</form>
+											</tr>
+										
+									 </tbody>
+									</table>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+					<!-- fin tab usuarios -->
+					
+					<!-- Tab Personalizacion -->
+				<div class="tab-pane fade show" id="nav-config" role="tabpanel" aria-labelledby="nav-config-tab">
+					<div class="card">
+						<div class="card-header">
+							<h1>PERSONALIZACION</h1>
+						</div>
+						<div class="card-body">
+							<div id="container">
+								<div class="content">
+								
+								<!-- <form th:action="@{/administracion/usuarios/}" method="get"> -->
+								<form th:action="@{/administracion/personalizacion/}" method="get">
+									<table class="table">
+										<caption>Personalización</caption>
+										
+										
+										<thead>
+											<tr>
+												<th scope="col">OPCION</th>
+												<th scope="col">VALOR</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th>Nombre negocio</th>
+												<td><input th:value="${nombreNegocio}" name="nombreNegocio" class="form-control" type="text"/></td>
+											</tr>
+											<tr>
+												<th>Color de fondo</th>
+												<td>
+													<div class="input-group mb-3">
+													  <select class="custom-select" id="colorFondo" name="colorFondo">
+													  		<option selected th:classappend="'p-3 mb-2 '+${colorFondo}+' text-white'"  th:text="${colorFondo}"></option>
+													 		<option value="bg-primary" class="p-3 mb-2 bg-primary text-white">.bg-primary</option>
+															<option value="bg-secondary" class="p-3 mb-2 bg-secondary text-white">.bg-secondary</option>
+															<option value="bg-success" class="p-3 mb-2 bg-success text-white">.bg-success</option>
+															<option value="bg-danger" class="p-3 mb-2 bg-danger text-white">.bg-danger</option>
+															<option value="bg-warning" class="p-3 mb-2 bg-warning text-dark">.bg-warning</option>
+															<option value="bg-info" class="p-3 mb-2 bg-info text-white">.bg-info</option>
+															<option value="bg-light" class="p-3 mb-2 bg-light text-dark">.bg-light</option>
+															<option value="bg-dark" class="p-3 mb-2 bg-dark text-white">.bg-dark</option>
+															<option value="bg-white" class="p-3 mb-2 bg-white text-dark">.bg-white</option>
+													  </select>
+													  </div>
+													  </td>
+											</tr>
+											<tr>
+												<th>Color de texto</th>
+												<td>
+												<div class="input-group mb-3">
+													  <select class="custom-select" id="colorTexto" name="colorTexto">
+													  		<option selected th:value="${colorTexto}" class="text-primary" th:text="${colorTexto}"></option>
+													  		<option value="text" class="text-primary">.text-</option>
+															<option value="text-secondary" class="text-secondary">.text-secondary</option>
+															<option value="text-success"  class="text-success">.text-success</option>
+															<option value="text-danger"  class="text-danger">.text-danger</option>
+															<option value="text-warning"  class="text-warning">.text-warning</option>
+															<option value="text-info"  class="text-info">.text-info</option>
+															<option value="text-light"  class="text-light bg-dark">.text-light</option>
+															<option value="text-dark"  class="text-dark">.text-dark</option>
+															<option value="text-body"  class="text-body">.text-body</option>
+															<option value="text-muted"  class="text-muted">.text-muted</option>
+															<option value="text-white"  class="text-white bg-dark">.text-white</option>
+															<option value="text-black-50"  class="text-black-50">.text-black-50</option>
+															<option value="text-white-50"  class="text-white-50 bg-dark">.text-white-50</option>
+													  </select>
+													  </div>
+											</tr>
+											<tr>
+												<th>Boton Primario</th>
+												<td>
+												<div class="input-group mb-3">
+													  <select class="custom-select" id="botonPrimario" name="botonPrimario">
+													  
+													 		<option selected th:value="${botonPrimario}"  class="p-3 mb-2 bg-primary text-white" th:text="${botonPrimario}"></option>
+													 		<option value="btn-primary" class="p-3 mb-2 bg-primary text-white">.btn-primary</option>
+															<option value="btn-secondary" class="p-3 mb-2 bg-secondary text-white">.btn-secondary</option>
+															<option value="btn-success" class="p-3 mb-2 bg-success text-white">.btn-success</option>
+															<option value="btn-danger" class="p-3 mb-2 bg-danger text-white">.btn-danger</option>
+															<option value="btn-warning" class="p-3 mb-2 bg-warning text-dark">.btn-warning</option>
+															<option value="btn-info" class="p-3 mb-2 bg-info text-white">.btn-info</option>
+															<option value="btn-light" class="p-3 mb-2 bg-light text-dark">.btn-light</option>
+															<option value="btn-dark" class="p-3 mb-2 bg-dark text-white">.btn-dark</option>
+															<option value="btn-white" class="p-3 mb-2 bg-white text-dark">.btn-white</option>
+													  </select>
+													  </div>
+											</tr>
+											<tr>
+												<th>Boton secundario</th>
+												<td>
+												<div class="input-group mb-3">
+													  <select class="custom-select" id="botonSecundario" name="botonSecundario">
+													 		<option value="btn-primary" class="p-3 mb-2 bg-primary text-white">.btn-primary</option>
+															<option value="btn-secondary" class="p-3 mb-2 bg-secondary text-white">.btn-secondary</option>
+															<option value="btn-success" class="p-3 mb-2 bg-success text-white">.btn-success</option>
+															<option value="btn-danger" class="p-3 mb-2 bg-danger text-white">.btn-danger</option>
+															<option value="btn-warning" class="p-3 mb-2 bg-warning text-dark">.btn-warning</option>
+															<option value="btn-info" class="p-3 mb-2 bg-info text-white">.btn-info</option>
+															<option value="btn-light" class="p-3 mb-2 bg-light text-dark">.btn-light</option>
+															<option value="btn-dark" class="p-3 mb-2 bg-dark text-white">.btn-dark</option>
+															<option value="btn-white" class="p-3 mb-2 bg-white text-dark">.btn-white</option>
+													  </select>
+													  </div>
+											</tr>
+											<tr>
+												<th>Imagen de fondo principal</th>
+												<td><input th:value="${fotoFondo}" name="fotoFondo" type="file"  class="form-control"/></td>
+											</tr>
+											<tr>
+												<th>Logotipo</th>
+												<td><input th:value="${logotipo}" name = "logotipo" type="file" class="form-control"/></td>
+											</tr>
+											
+										</tbody>
+									</table>
+									<input type="submit" class="btn btn-lg btn-primary btn-block" value="Actualizar" />
+									
+									</form>
+				               </div>
+				          </div>
+				          
+				       </div>							
+					</div>	
+				</div>	
+				
+				
+				<!-- Tab norma -->
+				<div class="tab-pane fade show" id="nav-norma" role="tabpanel" aria-labelledby="nav-norma-tab">
+				
+					<div class="card">
+						<div class="card-header">
+							<h1>NORMAS</h1>
+						</div>
+						<div class="card-body">
+							<div id="container">
+								<div class="content">
+									
+								<form th:action="@{/administracion/normas/}" method="get">
+								<table class="table">
+										<thead>
+											<tr>
+												<th scope="col">Politica de Cancelacion</th>
+												<th scope="col">Texto</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th>Texto cancelación ES</th>
+												<td><textarea class="form-control" name="cancelacion" th:value="${cancelacion}"   th:text="${cancelacion}" rows="3"></textarea></td>
+											</tr>
+											<tr>
+												<th>Texto cancelación EN</th>
+												<td><textarea class="form-control" name="cancelacionEN" th:value="${cancelacionEN}"   th:text="${cancelacionEN}" rows="3"></textarea></td>
+											</tr>
+											<tr>
+												<th>Texto cancelación FR</th>
+												<td><textarea class="form-control" name="cancelacionFR" th:value="${cancelacionFR}"   th:text="${cancelacionFR}" rows="3"></textarea></td>
+											</tr>
+											<tr>
+												<th>Texto cancelación DE</th>
+												<td><textarea class="form-control" name="cancelacionDE" th:value="${cancelacionDE}"   th:text="${cancelacionDE}" rows="3"></textarea></td>
+											</tr>
+										
+									 </tbody>
+									</table>
+									
+									<table class="table">
+									
+										<caption>Normativa</caption>
+										<thead>
+											<tr>
+												<th scope="col">Condiciones del servicio</th>
+												<th scope="col">Texto</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th>Condiciones ES</th>
+												<td><textarea class="form-control" name="condicionesServicio" th:value="${condicionesServicio}"   th:text="${condicionesServicio}" rows="3"></textarea></td>
+											</tr>
+											<tr>
+												<th>Condiciones EN</th>
+												<td><textarea class="form-control" name="condicionesServicioEN" th:value="${condicionesServicioEN}"   th:text="${condicionesServicioEN}" rows="3"></textarea></td>
+											</tr>
+											<tr>
+												<th>Condiciones FR</th>
+												<td><textarea class="form-control" name="condicionesServicioFR" th:value="${condicionesServicioFR}"   th:text="${condicionesServicioFR}" rows="3"></textarea></td>
+											</tr>
+											<tr>
+												<th>Condiciones DE</th>
+												<td><textarea class="form-control" name="condicionesServicioDE" th:value="${condicionesServicioDE}"   th:text="${condicionesServicioDE}" rows="3"></textarea></td>
+											</tr>
+									 </tbody>
+									</table>
+									
+									<input type="submit" class="btn btn-lg btn-primary btn-block" value="Actualizar" />
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Fin tab norma -->
+				
+				<div class="tab-pane fade show" id="nav-promo" role="tabpanel" aria-labelledby="nav-promo-tab">
+					<div class="card">
+						<div class="card-header">
+							<h1>PROMOCIONES</h1>
+						</div>
+						<div class="card-body">
+							<div id="container">
+								<div class="content">
+								
+									<form th:action="@{/promociones/guardarPromo}" th:object="${promociones}" method="get">
+										<div class="form-row">
+											<div class="col-md-5 col-form-label">
+												<label class="col-sm-10 col-form-label">Código Promoción:</label>
+											</div>
+											<div class="col-md-5 col-form-label">
+												<input type="text" th:field="*{codigoPromocion}" class="form-control" /> 
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('codigoPromocion')}" th:errors="*{nombreServicioEN}"></small>
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="col-md-5 col-form-label">
+												<label class="col-sm-10 col-form-label">Texto promoción:</label>
+											</div>
+											<div class="col-md-5 col-form-label">
+												<input type="text" th:field="*{textoPromocion}" class="form-control" /> 
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('textoPromocion')}" th:errors="*{textoPromocion}"></small>
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="col-md-5 col-form-label">
+												<label class="col-sm-10 col-form-label">Texto promoción EN:</label>
+											</div>
+											<div class="col-md-5 col-form-label">
+												<input type="text" th:field="*{textoPromocionEN}" class="form-control" /> 
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('textoPromocion')}" th:errors="*{textoPromocion}"></small>
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="col-md-5 col-form-label">
+												<label class="col-sm-10 col-form-label">Texto promoción FR:</label>
+											</div>
+											<div class="col-md-5 col-form-label">
+												<input type="text" th:field="*{textoPromocionFR}" class="form-control" /> 
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('textoPromocion')}" th:errors="*{textoPromocion}"></small>
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="col-md-5 col-form-label">
+												<label class="col-sm-10 col-form-label">Texto promoción DE:</label>
+											</div>
+											<div class="col-md-5 col-form-label">
+												<input type="text" th:field="*{textoPromocionDE}" class="form-control" /> 
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('textoPromocion')}" th:errors="*{textoPromocion}"></small>
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="col-md-5 col-form-label">
+												<label class="col-sm-10 col-form-label">Valor del descuento:</label>
+											</div>
+											<div class="col-md-5 col-form-label">
+												<input type="number" th:field="*{valorDescuento}" class="form-control" /> 
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('valorDescuento')}" th:errors="*{valorDescuento}"></small>
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="col-md-5 col-form-label">
+												<label class="col-sm-10 col-form-label">Numero de usos (por persona):</label>
+											</div>
+											<div class="col-md-5 col-form-label">
+												<input type="number" th:field="*{numeroDeUsos}" class="form-control" /> 
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('numeroDeUsos')}" th:errors="*{numeroDeUsos}"></small>
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="col-md-5 col-form-label">
+												<label class="col-sm-10 col-form-label">Bases legales:</label>
+											</div>
+											<div class="col-md-5 col-form-label">
+												<textarea class="form-control" th:field="*{basesLegales}" rows="3"></textarea>
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('basesLegales')}" th:errors="*{basesLegales}"></small>
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="col-md-5 col-form-label">
+												<label class="col-sm-10 col-form-label">Bases legales EN:</label>
+											</div>
+											<div class="col-md-5 col-form-label">
+												<textarea class="form-control" th:field="*{basesLegalesEN}" rows="3"></textarea>
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('basesLegales')}" th:errors="*{basesLegales}"></small>
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="col-md-5 col-form-label">
+												<label class="col-sm-10 col-form-label">Bases legales FR:</label>
+											</div>
+											<div class="col-md-5 col-form-label">
+												<textarea class="form-control" th:field="*{basesLegalesFR}" rows="3"></textarea>
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('basesLegales')}" th:errors="*{basesLegales}"></small>
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="col-md-5 col-form-label">
+												<label class="col-sm-10 col-form-label">Bases legales DE:</label>
+											</div>
+											<div class="col-md-5 col-form-label">
+												<textarea class="form-control" th:field="*{basesLegalesDE}" rows="3"></textarea>
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('basesLegales')}" th:errors="*{basesLegales}"></small>
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="col-md-5 col-form-label">
+												<label class="col-sm-10 col-form-label">Inicio de la promoción:</label>
+											</div>
+											<div class="col-md-5 col-form-label">
+												<input type="date" th:field="*{fechaInicio}" class="form-control" /> 
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('fechaInicio')}" th:errors="*{fechaInicio}"></small>
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="col-md-5 col-form-label">
+												<label class="col-sm-10 col-form-label">Fin de la promoción:</label>
+											</div>
+											<div class="col-md-5 col-form-label">
+												<input type="date" th:field="*{fechaFin}" class="form-control" /> 
+												<small class="form-text text-danger" th:if="${#fields.hasErrors('fechaFin')}" th:errors="*{fechaFin}"></small>
+											</div>
+											<div class="col-md-5 offset-md-5">
+												<input type="submit" class="btn btn-lg btn-primary btn-block" value="Crear promoción" />
+											</div>
+										</div>
+									</form>
+								</div>
+								<br>
+							</div>
+								<table class="table">
+								  <caption>Promociones</caption>
+								  <thead>
+								    <tr>
+								      <th scope="col">#</th>
+								      <th scope="col">Código Promociones</th>
+								      <th scope="col">Texto Promoción</th>
+								      <th scope="col">Valor descuento</th>
+								      <th scope="col">Número de usos</th>
+								      <th scope="col">Fecha Inicio</th>
+								      <th scope="col">Fecha Fin</th>
+								      <th scope="col">Activar/Desactivar</th>
+								    </tr>
+								  </thead>
+								  <tbody>
+								    <tr th:classappend="${promocion.activo} ? table-success : table-danger" th:each="promocion: ${promocionesLista}">
+								      <th scope="row" th:text="${promocion.id}"></th>
+								      <td th:text="${promocion.codigoPromocion}"></td>
+								      <td th:text="${promocion.textoPromocion}"></td>
+								      <td th:text="${promocion.valorDescuento}"></td>
+								      <td th:text="${promocion.numeroDeUsos}"></td>
+								      <td th:text="${promocion.fechaInicio}"></td>
+								      <td th:text="${promocion.fechaFin}"></td>
+								      <td>
+								      	<a th:classappend="${promocion.activo} ? btn-danger : btn-success " class="btn btn-xs" th:href="@{/promociones/activarDesactivar/}+${promocion.id}" th:text="${promocion.activo} ? 'Desactivar' : 'Activar' "></a>
+									  </td>
+								    </tr>
+								  </tbody>
+								</table>
+								<nav th:replace="paginator-nav :: paginator"></nav>
+						</div>
+					</div>
+				</div>				
+			</div>	
+		</div>
+<footer th:replace="layout/layout :: footer"></footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+			<script>
+			
+			
+			
+			//Buscador de usuarios
+				$(document).ready(function() {
+					var busqueda = $('#busqueda'), titulo = $('tbody tr th');
+					$(titulo).each(function() {
+						var li = $(this);
+						//si presionamos la tecla
+						$(busqueda).keyup(function() {
+							//cambiamos a minusculas
+							this.value = this.value.toLowerCase();
+							//
+							var clase = $('.search i');
+							if ($(busqueda).val() != '') {
+								$(clase).attr('class', 'fa fa-times');
+							} else {
+								$(clase).attr('class', 'fa fa-search');
+							}
+							if ($(clase).hasClass('fa fa-times')) {
+								$(clase).click(function() {
+									//borramos el contenido del input
+									$(busqueda).val('');
+									//mostramos todas las listas
+									$(li).parent().show();
+									//volvemos a añadir la clase para mostrar la lupa
+									$(clase).attr('class', 'fa fa-search');
+								});
+							}
+							//ocultamos toda la lista
+							$(li).parent().hide();
+							//valor del h3
+							var txt = $(this).val();
+							//si hay coincidencias en la búsqueda cambiando a minusculas
+							if ($(li).text().toLowerCase().indexOf(txt) > -1) {
+								//mostramos las listas que coincidan
+								$(li).parent().show();
+							}
+						});
+					});
+				});
+				
+	
+			
+			
+			</script>
+</body>

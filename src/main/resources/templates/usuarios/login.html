@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+ <meta charset="UTF-8">
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<body>
+	<script src='https://www.google.com/recaptcha/api.js'></script>
+
+	
+	
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" th:href="@{/index}">VILU</a>
+	</nav>
+
+	<div class="container py-4">
+		<ul th:if="${error != null}" class="alert alert-danger"
+						role="alert">
+						<li th:text="${error}"></li>
+					</ul>
+
+		<div class="card border-primary text-center">
+			<div class="card-header">Por favor inicie sesión</div>
+			<div class="card-body">
+
+				<form th:action="@{/login}" method="post">
+
+
+					<div class="form-group col-sm-6">
+						<input type="text" name="username" id="username"
+							class="form-control" placeholder="UserName" required autofocus />
+					</div>
+
+
+					<div class="form-group col-sm-6">
+						<input type="password" name="password" id="password"
+							class="form-control" placeholder="Password" required />
+					</div>
+
+
+					<div class="form-group row">
+						<div class="col-md-6">
+							<input type="submit" class="btn btn-lg btn-primary btn-block"
+								value="Sign In" />
+						</div>
+
+
+						<div class="col-md-6">
+							<a class="btn btn-lg btn-primary btn-block"
+								th:href="@{'/registro'}"> Registro</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!-- Button trigger modal -->
+			<a href="#" data-toggle="modal" data-target="#exampleModal"> He olvidado mi contraseña </a>
+	</div>
+	<!-- Modal -->
+	
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Indique su
+						email y para recuperar su cuenta:</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form th:action="@{/recuperarpw}" method="get">
+						<div class="form-group col-sm-6">
+							<input type="text" name="username" id="username"
+								class="form-control" placeholder="UserName" required autofocus />
+						</div>
+						<div class="form-group col-sm-6">
+							<input type="text" name="email" id="email"
+								class="form-control" placeholder="email" required autofocus />
+						</div>
+						<div class="form-group col-sm-6">
+							<div class="g-recaptcha"
+								data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+							<script src='https://www.google.com/recaptcha/api.js'></script>
+						</div>
+						<div class="modal-footer">
+							<input type="submit" class="btn btn-lg btn-primary btn-block"
+								value="Enviar" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

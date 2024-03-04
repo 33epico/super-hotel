@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<div th:replace="layout/public_layout :: navigation"></div>
+
+	<div class="container py-4">
+		<div class="card bg-dark text-white">
+
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+
+				<div th:object="${piso}" th:remove="tag">
+					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+						role="alert">
+						<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="container">
+				<form th:action="@{/privada/form}" th:object="${piso}" method="POST">
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Id Piso</label>
+						<div class="col-sm-6">
+
+							<input type="text" th:field="*{nombre}" class="form-control"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2  col-form-label">Calle</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{calle}" class="form-control"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('calle')}" th:errors="*{calle}"></small>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-md-2  col-form-label">Portal</label>
+						<div class="col-sm-2">
+							<input type="text" th:field="*{numero}" class="form-control"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('numero')}" th:errors="*{numero}"></small>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-md-3  col-form-label">Planta</label>
+							<div class="col-sm-6">
+								<input type="text" th:field="*{pisoAltura}" class="form-control"
+									th:errorclass="'form-control alert-danger'" /> <small
+									class="form-text text-danger"
+									th:if="${#fields.hasErrors('pisoAltura')}"
+									th:errors="*{pisoAltura}"></small>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-sm-2  col-form-label">Población</label>
+						<div class="col-sm-3">
+							<input type="text" th:field="*{poblacion}" class="form-control"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('poblacion')}"
+								th:errors="*{poblacion}"></small>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-md-4  col-form-label">Habitaciones</label>
+							<div class="col-sm-4">
+								<input type="number" th:field="*{habitaciones}"
+									class="form-control"
+									th:errorclass="'form-control alert-danger'" /> <small
+									class="form-text text-danger"
+									th:if="${#fields.hasErrors('habitaciones')}"
+									th:errors="*{habitaciones}"></small>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group row col-xs-2">
+						<label class="form-group col-md-2" style="width: 300px">Personas</label>
+						<div class="col-md-2">
+							<input type="number" th:field="*{personas}"
+								class="form-control col-xs-2"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('personas')}" th:errors="*{personas}"></small>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-md-2  col-form-label">Coordenada X</label>
+						<div class="col-sm-2">
+							<input type="text" th:field="*{coordenadaX}" class="form-control"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('coordenadaX')}" th:errors="*{coordenadaX}"></small>
+						</div>
+					
+					
+						<label class="col-md-2  col-form-label">Coordenada Y</label>
+						<div class="col-sm-2">
+							<input type="text" th:field="*{coordenadaY}" class="form-control"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('coordenadaY')}" th:errors="*{coordenadaY}"></small>
+						</div>
+					</div>
+
+					<div class="form-group row col-xs-2">
+						<label class="form-group col-md-2" style="width: 300px">Tarifa Base</label>
+						<div class="col-md-2">
+							<input type="number" th:field="*{tarifaBase}"
+								class="form-control col-xs-2"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('tarifaBase')}"
+								th:errors="*{tarifaBase}"></small>
+
+						</div>
+					</div>
+					<div class="form-group row col-xs-2">
+						<label class="form-group col-md-2" style="width: 300px">Servicio Limpieza</label>
+						<div class="col-md-2">
+							<input type="number" th:field="*{servicioLimpieza}"
+								class="form-control col-xs-2"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('servicioLimpieza')}"
+								th:errors="*{servicioLimpieza}"></small>
+
+						</div>
+					</div>
+
+
+					<div class="form-group row">
+						<label class="col-sm-2  col-sm-2 col-form-label">Detalles ES</label>
+						<div class="col-sm-6">
+							<textarea rows="3" th:field="*{detalle}" class="form-control"
+								th:errorclass="'form-control alert-danger'"></textarea>
+							<small class="form-text text-danger"
+								th:if="${#fields.hasErrors('detalle')}" th:errors="*{detalle}"></small>
+
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2  col-sm-2 col-form-label">Detalles EN</label>
+						<div class="col-sm-6">
+							<textarea rows="3" th:field="*{detalleEN}" class="form-control"
+								th:errorclass="'form-control alert-danger'"></textarea>
+							<small class="form-text text-danger"
+								th:if="${#fields.hasErrors('detalleEN')}" th:errors="*{detalle}"></small>
+
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2  col-sm-2 col-form-label">Detalles FR</label>
+						<div class="col-sm-6">
+							<textarea rows="3" th:field="*{detalleFR}" class="form-control"
+								th:errorclass="'form-control alert-danger'"></textarea>
+							<small class="form-text text-danger"
+								th:if="${#fields.hasErrors('detalleFR')}" th:errors="*{detalle}"></small>
+
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2  col-sm-2 col-form-label">Detalles DE</label>
+						<div class="col-sm-6">
+							<textarea rows="3" th:field="*{detalleDE}" class="form-control"
+								th:errorclass="'form-control alert-danger'"></textarea>
+							<small class="form-text text-danger"
+								th:if="${#fields.hasErrors('detalleDE')}" th:errors="*{detalle}"></small>
+
+						</div>
+					</div>
+
+
+					<div class="form-group row">
+						<label class="col-sm-2  col-form-label">Fecha CreaciÃ³n</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{createAt}" class="form-control"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('createAt')}" th:errors="*{createAt}"></small>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-sm-2  col-form-label">Inactivo</label>
+						<div class="col-sm-1">
+							<input type="checkbox" th:field="*{activo}" class="form-control"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('activo')}" th:errors="*{activo}"></small>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-sm-4  col-form-label">Motivos Baja</label>
+							<div class="col-sm-8">
+								<input type="text" th:field="*{motivo}" class="form-control"
+									th:errorclass="'form-control alert-danger'" /> <small
+									class="form-text text-danger"
+									th:if="${#fields.hasErrors('motivo')}" th:errors="*{motivo}"></small>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-sm-6">
+							<input type="submit" th:value="${titulo}" class="btn btn-secondary" /> 
+							<a th:if="${piso.nombre}" class="btn btn-secondary btn-xs" th:href="@{'/galeria/form/'+${piso.id}}"> Galeria</a> 
+							<a th:if="${piso.nombre}" class="btn btn-secondary btn-xs" th:href="@{'/galeria/servicios/'+${piso.id}}"> Servicios</a> 
+							<a th:if="${piso.nombre}" class="btn btn-secondary btn-xs" th:href="@{'/tarifa/editor/'+${piso.id}}"> Tarifas</a>
+						</div>
+					</div>
+				</form>
+			</div>
+				</div>
+					</div>
+
+			<footer th:replace="layout/layout :: footer"></footer>
+</body>

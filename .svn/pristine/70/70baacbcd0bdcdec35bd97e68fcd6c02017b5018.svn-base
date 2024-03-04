@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+
+<body>
+
+	<div th:replace="layout/public_layout :: navigation"></div>
+
+
+	<div class="container py-4">
+
+		<div class="card bg-light">
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+
+				<h4 class="card-tittle">
+		
+				<a th:href="@{/privada/form}" class="btn btn-primary btn-xs"> Nuevo Piso</a>
+				<a th:href="@{/privada/reservas}" class="btn btn-primary btn-xs"> Reservas</a>
+				<a class="btn btn-outline-secondary dropdown" href="#" role="button" id="dropdownFiltro" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+					<span>Filtros</span>
+				</a>
+							<div class="dropdown-menu" aria-labelledby="dropdownmenulink">
+									<a th:href="@{/privada/listar/}" class="btn btn-primary btn-xs"> Todos</a> 
+									<a th:href="@{/privada/listar/activo}" class="btn btn-primary btn-xs"> Activos</a> 
+									<a th:href="@{/privada/listar/inactivo}" class="btn btn-primary btn-xs"> Inactivos</a>
+							</div>
+				
+				</h4>
+
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Ref.</th>
+							<th th:text="#{text.piso.nombre}"></th>
+							<th th:text="#{text.piso.direccion}">Direccion</th>
+							<th th:text="#{text.piso.poblacion}">Poblacion</th>
+							<th th:text="#{text.piso.habitaciones}">Habitaciones</th>
+							<th th:text="#{text.piso.activo}">Activo</th>
+							<th th:text="#{text.piso.fotos}">Fotos</th>
+							<th th:text="#{text.piso.editar}">Editar</th>
+							<th th:text="#{text.piso.borrar}">Borrar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- con th:each recorremos los objetos que trameos de la bdd -->
+						<tr th:each="piso: ${pisos}">
+							<td><a class="btn btn-primary btn-xs" th:href="@{/privada/ver/}+${piso.id}" th:text="${piso.id}"></a></td>
+							<td th:text="${piso.nombre}"></td>
+							<td th:text="${piso.calle}+' '+${piso.numero}+' '+${piso.pisoAltura}"></td>
+							<td th:text="${piso.poblacion}"></td>
+							<td th:text="${piso.habitaciones}"></td>
+							<td th:if="${piso.activo}"><p>NO ACTIVO</p></td>
+							<td th:unless="${piso.activo}"><p>ACTIVO</p></td>
+							<td><a class="btn btn-success btn-xs" th:href="@{'/galeria/form/'+${piso.id}}" th:text="Galeria"></a></td>
+							<td><a class="btn btn-primary btn-xs" th:href="@{/privada/form/}+${piso.id}" th:text="Editar"></a></td>
+							<td><a class="btn btn-danger btn-xs" th:href="@{/privada/eliminar/}+${piso.id}" th:text="X" onclick="return confirm('Esta seguro que quiere eliminar');"></a></td>
+						</tr>
+
+					</tbody>
+				</table>
+				<nav th:replace="paginator-nav :: paginator"></nav>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<link rel="stylesheet" th:href="@{/bootstrap-4.5.2-dist/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" type="text/css" href="/hotel-datepicker/dist/css/hotel-datepicker.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" />
+
+
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title th:text="${nombreNegocio}"></title>
+
+</head>
+
+
+<body class="p-3 mb-2 bg-white">
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 text-dark">
+					<h1 class="mt-5">Pagada</h1>
+				</div>
+			</div>
+		</div>
+	</section>
+<hr/>
+
+</body>
+<!-- Añadimos las modales generales -->
+<div th:replace="layout/layout :: modalCondiciones"></div>
+
+<footer th:replace="layout/layout :: footer"></footer>
+<!-- Bootstrap core JavaScript -->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/hotel-datepicker/js/fecha.min.js}"></script>
+<script type="text/javascript" th:src="@{/hotel-datepicker/js/hotel-datepicker.min.js}"></script>
+<script type="text/javascript" th:src="@{/momentjs/downloads/moment.min.js}"></script>

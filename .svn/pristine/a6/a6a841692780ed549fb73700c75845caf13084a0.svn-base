@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<div th:replace="layout/public_layout :: navigation"></div>
+
+<div class="container py-4">
+		<div class="card bg-dark text-white">
+
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+
+				<div th:object="${foto}" th:remove="tag">
+					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+						role="alert">
+						<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+					</ul>
+				</div>
+				<div class="container">
+				<!--con enctype="multipart/form-data" permitimos suir archivos mediante post  -->
+					
+				<form th:action="@{/galeria/form}" th:object="${foto}" method="post" enctype="multipart/form-data">
+					
+					<div class="form-group row">
+						<label for="Piso" class="col-sm-2 col-form-label"
+							th:text="'Piso'"></label>
+						<div class="col-sm-6">
+							<input
+								th:value="${foto.piso.nombre}"
+								class="form-control" disabled='disabled' />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Detalle</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{detalle}" class="form-control"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('detalle')}" th:errors="*{detalle}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="file" class="col-sm-2  col-form-label">Foto</label>
+						<div class="col-sm-6">
+							<input type="file" name="file" class="form-control"/>
+						</div>
+					</div>
+					<div class="form-group row"> 
+						<div class="col-sm-6">
+							<input type="submit" th:value="${titulo}" class="btn btn-secondary" />
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+	
+		<div th:if="${#lists.isEmpty(piso.fotos)}"
+					class="alert alert-info my-4"
+					th:text="'No hay fotos asignadas para el piso '+${piso.nombre}">
+				</div>
+				<table th:if="${not #lists.isEmpty(piso.fotos)}"
+					class="table table-bordered table-striped my-4">
+					<thead class="thead-dark">
+						<tr>
+						    <th>Numero</th>
+							<th>Detalle</th>
+							<th>Foto</th>
+							<th>Eliminar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="foto: ${piso.fotos}">
+							<td th:text="${foto.id}"></td>
+							<td th:text="${foto.detalle}"></td>
+							<td><img th:if="${#strings.length(foto.fotoImg) > 0}"
+							class="img-thumbnail rounded float-center" style="max-width: 15%"
+							th:src="@{'/uploads/'+${foto.fotoImg}}" th:alt="${foto.detalle}" /></td>
+							<td><a class="btn btn-danger btn-xs"
+							th:href="@{/galeria/eliminar/}+${foto.id}" th:text="X"
+							onclick="return confirm('Esta seguro que quiere eliminar');"></a></td>
+					</tbody>
+				</table>
+
+
+	<footer th:replace="layout/layout :: footer"></footer>
+
+
+</body>
+</html>

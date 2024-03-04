@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<div th:replace="layout/public_layout :: navigation"></div>
+
+	<div class="container py-4">
+
+		<div class="card bg-light">
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+			
+			<h4 class="card-tittle" >
+			PISOS
+			
+			</h4>
+				<ul class="list-group">
+					<li class="list-group-item" th:text="${piso.nombre}"></li>
+					<li class="list-group-item" th:text="'Direccion:'+ ${piso.calle} +' '+${piso.numero}"></li>
+				
+				</ul>
+				
+				<div th:if="${#lists.isEmpty(piso.fotos)}"
+					class="alert alert-info my-4"
+					th:text="'No hay fotos asignadas para el piso '+${piso.nombre}">
+				</div>
+				<table th:if="${not #lists.isEmpty(piso.fotos)}"
+					class="table table-bordered table-striped my-4">
+					<thead class="thead-dark">
+						<tr>
+						    <th>Numero</th>
+							<th>Detalle</th>
+							<th>Foto</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="foto: ${piso.fotos}">
+							<td th:text="${foto.id}"></td>
+							<td th:text="${foto.detalle}"></td>
+							<td><img th:if="${#strings.length(foto.fotoImg) > 0}"
+							class="img-thumbnail rounded float-Left" style="max-width: 25%"
+							th:src="@{'/uploads/'+${foto.fotoImg}}" th:alt="${foto.detalle}" /></td>
+					</tbody>
+				</table>
+
+			</div>
+			
+			</div>
+		</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+
+</body>

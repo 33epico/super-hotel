@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link
+	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" />
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<div th:replace="layout/public_layout :: navigation"></div>
+
+	<div class="container py-4">
+
+		<div class="card bg-light">
+			<nav>
+				<div class="nav nav-tabs" id="nav-tab" role="tablist">
+					<a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+						aria-controls="nav-home" aria-selected="true">Datos de perfil</a>
+					<a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
+						aria-selected="false">Mensajes</a> 
+					<a class="nav-item nav-link" id="nav-reserva-tab" data-toggle="tab" href="#nav-reserva" role="tab" aria-controls="nav-reserva"
+						aria-selected="false">Reservas</a>
+				</div>
+			</nav>
+
+			<div class="tab-content" id="nav-tabContent">
+				<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+				<div class="card bg-light">
+			<article class="card-body mx-auto" style="max-width: 400px;">
+				<h4 class="card-title mt-3 text-center">Datos del Usuario</h4>
+
+				<div th:object="${usuario}" th:remove="tag">
+					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+						role="alert">
+						<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+					</ul>
+				</div>
+
+				<form th:action="@{/registro}" method="post" id="formCheckPassword">
+
+ 					<label for="username" class="col-sm-12 col-form-label">Nombre de usuario:</label>
+					<div class="form-group input-group">
+					<div class="input-group-prepend">
+							<span class="input-group-text"> <i class="fa fa-user"></i>
+							</span>
+						</div>
+						<input type="text" readonly th:value="${usuario.username}"
+							th:name="username" th:field="*{usuario.username}"
+							class="form-control" th:errorclass="'form-control is-invalid'"
+							placeholder="Usuario" />
+
+
+						<div class="invalid-feedback"
+							th:if="${#fields.hasErrors('usuario.username')}"
+							th:errors="*{usuario.username}"></div>
+					</div>
+
+					<!-- form-group end.// -->
+					
+					<div class="form-group input-group">
+						<input type="hidden" th:value="1" th:name="enabled"
+							class="form-control" />
+					</div>
+
+					<div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"> <i class="fa fa-user"></i>
+							</span>
+						</div>
+						<input th:value="${usrPerfil.nombre}" th:name="nombre"
+							class="form-control" placeholder="Nombre" type="text">
+					</div>
+
+					<div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"> <i class="fa fa-user"></i>
+							</span>
+						</div>
+						<input th:value="${usrPerfil.apellidos}" th:name="apellidos"
+							class="form-control" placeholder="Apellidos" type="text">
+					</div>
+
+					<div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"> <i class="fa fa-calendar"></i>
+							</span>
+						</div>
+						<input th:value="${usrPerfil.fechaNacimiento}"
+							th:name="fechaNacimiento" data-date-format="yyyy-mm-dd"
+							id="datepicker">
+					</div>
+
+					<div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"> <i class="fa fa-envelope"></i>
+							</span>
+						</div>
+						<input th:value="${usrPerfil.email}" th:name="email"
+							class="form-control" placeholder="Direccion de Email"
+							type="email">
+					</div>
+
+					<div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"> <i class="fa fa-home"></i>
+							</span>
+						</div>
+						<input th:value="${usrPerfil.direccion}" th:name="direccion"
+							class="form-control" placeholder="Direccion" type="text">
+					</div>
+
+					<div class="form-group input-group">
+						<input type="hidden" th:name="createAt" class="form-control"
+							id="createAt" th:value="2019-12-18" data-date-format="yyyy-mm-dd" />
+					</div>
+
+					<div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"> <i class="fa fa-phone"></i>
+							</span>
+						</div>
+						<input th:value="${usrPerfil.telefono}" th:name="telefono"
+							class="form-control" type="text" placeholder="+34 6000 000 000">
+					</div>
+
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary btn-block">Guardar</button>
+					</div>
+				</form>
+			</article>
+		</div>
+
+					
+				</div>
+
+				<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">Datos de pago</div>
+				<div class="tab-pane fade" id="nav-reserva" role="tabpanel" aria-labelledby="nav-reserva-tab">
+
+					<div class="container py-4">
+						<div class="card">
+							<div class="card-header">
+								<h2>Reservas pendientes de pago</h2>
+							</div>
+							<div class="card-body">
+								<h5 th:if="${#lists.isEmpty(reservasSinPagar)}">No hay
+									reservas pendiente de pago</h5>
+								<table class="table"
+									th:if="${not #lists.isEmpty(reservasSinPagar)}">
+									<caption>Reservas pendientes de pago</caption>
+									<thead>
+										<tr>
+											<th scope="col">id</th>
+											<th scope="col">CheckIn</th>
+											<th scope="col">CheckOut</th>
+											<th scope="col">Localizador</th>
+											<th scope="col">Precio</th>
+											<th scope="col">Completar el pago</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="table-warning"
+											th:each="reservaSinPagar: ${reservasSinPagar}">
+											<td th:text="${reservaSinPagar.id}"></td>
+											<td th:text="${reservaSinPagar.fechaInicio}"></td>
+											<td th:text="${reservaSinPagar.fechaFin}"></td>
+											<td th:text="${reservaSinPagar.codigoReserva}"></td>
+											<td th:text="${reservaSinPagar.precioCalculado}"></td>
+											<td><a class="btn btn-primary btn-xs"
+												th:href="'/perfil/?idReserva='+${reservaSinPagar.codigoReserva}">Completar el pago</a></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<div class="container py-4">
+						<div class="card">
+							<div class="card-header">
+								<h2>Reservas Activas</h2>
+							</div>
+							<div class="card-body">
+								<table class="table">
+									<caption>
+										Reservas activas
+										<h5 class="table-success">Activa</h5>
+										<h5 class="table-info">Próxima</h5>
+									</caption>
+									<thead>
+										<tr>
+											<th scope="col">id</th>
+											<th scope="col">CheckIn</th>
+											<th scope="col">CheckOut</th>
+											<th scope="col">Localizador</th>
+											<th scope="col">Precio</th>
+											<th scope="col">Petici&oacuten</th>
+											<th scope="col">Mensaje</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="table-success"
+											th:each="reservaActiva: ${reservasActivas}">
+											<td th:text="${reservaActiva.id}"></td>
+											<td th:text="${reservaActiva.fechaInicio}"></td>
+											<td th:text="${reservaActiva.fechaFin}"></td>
+											<td th:text="${reservaActiva.codigoReserva}"></td>
+											<td th:text="${reservaActiva.precioCalculado}"></td>
+											<td></td>
+											<td><a class="btn btn-primary btn-xs">Mensaje</a></td>
+											
+										</tr>
+										<tr class="table-info"
+											th:each="reservaProxima: ${reservasProximas}">
+											<td th:text="${reservaProxima.id}"></td>
+											<td th:text="${reservaProxima.fechaInicio}"></td>
+											<td th:text="${reservaProxima.fechaFin}"></td>
+											<td th:text="${reservaProxima.codigoReserva}"></td>
+											<td th:text="${reservaProxima.precioCalculado}"></td>
+											<td><a class="btn btn-danger btn-xs" th:href="'/perfil/?idReserva='+${reservaProxima.codigoReserva}">Cancelar</a></td>
+											<td>Mensajes</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="container py-4">
+						<div class="card">
+							<div class="card-header">
+								<h2>Reservas Canceladas</h2>
+							</div>
+							<div class="card-body">
+								<h5 th:if="${#lists.isEmpty(reservasCanceladas)}">No hay
+									reservas canceladas</h5>
+								<table class="table"
+									th:if="${not #lists.isEmpty(reservasCanceladas)}">
+									<caption>Reservas canceladas</caption>
+									<thead>
+										<tr>
+											<th scope="col">id</th>
+											<th scope="col">CheckIn</th>
+											<th scope="col">CheckOut</th>
+											<th scope="col">Localizador</th>
+											<th scope="col">Precio</th>
+											<th scope="col">Estado Petici&oacuten</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="table-danger"
+											th:each="reservaCancelada: ${reservasCanceladas}">
+											<td th:text="${reservaCancelada.id}"></td>
+											<td th:text="${reservaCancelada.fechaInicio}"></td>
+											<td th:text="${reservaCancelada.fechaFin}"></td>
+											<td th:text="${reservaCancelada.codigoReserva}"></td>
+											<td th:text="${reservaCancelada.precioCalculado}"></td>
+											<td th:text="${reservaCancelada.mensaje}"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="container py-4"
+						th:if="${not #lists.isEmpty(reservasHistorico)}">
+						<div class="card">
+							<div class="card-header">
+								<h2>Historico Reservas</h2>
+							</div>
+							<div class="card-body">
+								<table class="table">
+									<caption>Historico Reservas</caption>
+									<thead>
+										<tr>
+											<th scope="col">id</th>
+											<th scope="col">CheckIn</th>
+											<th scope="col">CheckOut</th>
+											<th scope="col">Localizador</th>
+											<th scope="col">Precio</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="table-Warning"
+											th:each="reservaHistorico: ${reservasHistorico}">
+											<td th:text="${reservaHistorico.id}"></td>
+											<td th:text="${reservaHistorico.fechaInicio}"></td>
+											<td th:text="${reservaHistorico.fechaFin}"></td>
+											<td th:text="${reservaHistorico.codigoReserva}"></td>
+											<td th:text="${reservaHistorico.precioCalculado}"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+
+</body>

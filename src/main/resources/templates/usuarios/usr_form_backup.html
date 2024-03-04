@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/layout :: head"></head>
+
+<body>
+
+	<link
+		href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		rel="stylesheet" id="bootstrap-css">
+	<script
+		src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script
+		src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<link rel="stylesheet"
+		href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" />
+
+	<navigation th:replace="layout/public_layout :: navigation"></navigation>
+
+	<div class="container">
+		<br>
+		<hr>
+		<div class="card bg-light">
+			<article class="card-body mx-auto" style="max-width: 400px;">
+				<h4 class="card-title mt-3 text-center">Regístrese</h4>
+				<p class="text-center">Resgítrese gratuitamente para hacer una
+					reserva...</p>
+
+				<form th:action="@{/registro}" method="post" id="formCheckPassword">
+
+
+					<div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"> <i class="fa fa-user"></i>
+							</span>
+						</div>
+						<input type="text" th:value="${usuario.username}"
+							th:name="username" class="form-control" placeholder="Usuario" />
+					</div>
+
+					<!-- form-group end.// -->
+					<div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"> <i class="fa fa-lock"></i>
+							</span>
+						</div>
+						<input id="password" type="text" th:value="${usuario.password}"
+							th:name="password" class="form-control" placeholder="Contraseña" />
+					</div>
+
+
+					<!-- form-group// -->
+					<div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"> <i class="fa fa-lock"></i>
+							</span>
+						</div>
+						<input id="cfmpassword" type="text" value="" class="form-control"
+							placeholder="Repita Contraseña" th:name="cfmpassword">
+					</div>
+					<div class="form-group input-group">
+						<input type="hidden" th:value="1" th:name="enabled"
+							class="form-control" />
+					</div>
+
+
+
+					<div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"> <i class="fa fa-user"></i>
+							</span>
+						</div>
+						<input th:value="${usrPerfil.nombre}" th:name="nombre"
+							class="form-control" placeholder="Nombre" type="text">
+					</div>
+
+					<div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"> <i class="fa fa-user"></i>
+							</span>
+						</div>
+						<input th:value="${usrPerfil.apellidos}" th:name="apellidos"
+							class="form-control" placeholder="Apellidos" type="text">
+					</div>
+
+
+					<div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"> <i class="fa fa-calendar"></i>
+							</span>
+						</div>
+						<input th:value="${usrPerfil.fechaNacimiento}"
+							th:name="fechaNacimiento" data-date-format="yyyy-mm-dd"
+							id="datepicker">
+					</div>
+
+					<!-- form-group// -->
+					<div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"> <i class="fa fa-envelope"></i>
+							</span>
+						</div>
+						<input th:value="${usrPerfil.email}" th:name="email"
+							class="form-control" placeholder="Direccion de Email"
+							type="email">
+					</div>
+
+					<div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"> <i class="fa fa-home"></i>
+							</span>
+						</div>
+						<input th:value="${usrPerfil.direccion}" th:name="direccion"
+							class="form-control" placeholder="Direccion" type="text">
+					</div>
+					<!-- form-group// -->
+					<div class="form-group input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"> <i class="fa fa-phone"></i>
+							</span>
+						</div>
+						<input th:value="${usrPerfil.telefono}" th:name="telefono"
+							class="form-control" type="text" placeholder="+34 6000 000 000">
+					</div>
+
+
+					<!-- form-group// -->
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary btn-block">Registrarse</button>
+					</div>
+					<!-- form-group// -->
+					<p class="text-center">
+						¿Ya tienes una cuenta? <a href="">Inicie sesión</a>
+					</p>
+				</form>
+			</article>
+		</div>
+		<!-- card.// -->
+
+	</div>
+	<!-- /.container -->
+	<footer th:replace="layout/layout :: footer"></footer>
+
+
+
+</body>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	crossorigin="anonymous"></script>
+<script
+	src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"></script>
+
+<script type="text/javascript">
+	$('#datepicker').datepicker({
+		weekStart : 1,
+		daysOfWeekHighlighted : "6,0",
+		autoclose : true,
+		todayHighlight : true,
+	});
+	$('#datepicker').datepicker("setDate", new Date());
+
+	$("#formCheckPassword")
+			.validate(
+					{
+						/* here we define the rules for the password and confirmpassword  input type field in the      
+						       html page.*/
+
+						rules : {
+							password : {
+								required : true,
+								minlength : 6,
+								maxlength : 10,
+							},
+							cfmpassword : {
+								required : true,
+								equalTo : "#password",
+								minlength : 6,
+								maxlength : 10
+							}
+						},
+						/* here we define the messages for the password and confirmpassword  in case the user does not fulfill the rules defined above.*/
+						messages : {
+							password : {
+								required : "<br>El password es obligatorio</br>",
+								minlength : "<br>El password  debe tener entre 6 y 10 caracteres</br>",
+
+							},
+							cfmpassword : {
+								required : "<br>Es necesario confirmar el password</br>",
+								equalTo : "<br>Los campos de password deben ser iguales</br>",
+
+							}
+
+						},
+
+					});
+</script>

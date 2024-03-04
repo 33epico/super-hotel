@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<link rel="stylesheet" th:href="@{/bootstrap-4.5.2-dist/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<link rel="stylesheet" type="text/css" href="/hotel-datepicker/dist/css/hotel-datepicker.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
+	<meta charset="utf-8">
+	
+
+<title th:text="${nombreNegocio}"></title>
+
+</head>
+
+
+<body class="p-3 mb-2 bg-white">
+
+	<script  src="https://www.paypal.com/sdk/js?client-id=AXcfIsqwa5AcF9WEGZ5LZ-3QUIMVJhz7wyWKpT701wZhfEp_tUp7Sq6vHipqoPCJsj9mLfamBKHyiSOL"> 
+ 	 </script>
+
+
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 text-dark">
+					<h1 class="mt-5">Confirmar y pagar</h1>
+				</div>
+			</div>
+		</div>
+	</section>
+<hr/>
+<div class="p-3 mb-2 text-dark">
+	<div class="container ">
+			<div class="row ">
+				<span id="mensaje"></span><br>
+				
+					<div class="col">
+						<nav>
+							 <ol class="breadcrumb">
+						    <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+						    <li class="breadcrumb-item active" aria-current="page"><a th:href="@{'/publico/listar/'}" >Listado</a></li>
+						    <li class="breadcrumb-item active" aria-current="page"><a th:href="@{'/publico/galeria_publica/'+${piso.id}}" >Galeria</a></li>
+						    <li class="breadcrumb-item" aria-current="page">Reserva</li>
+						  </ol>
+						</nav>
+						<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#condicionesModal" th:text="#{text.mapa.condiciones}">Condiciones del Servicio</button>
+					<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#cancelacionModal" th:text="#{text.mapa.cancelacion}">Politica de Cancelación</button>
+						<h3 class="mt-4 font-weight-bolder">Tu reserva</h3>
+						
+						<div class="row" id="reservaResumen">
+								<div class="col-4">
+									<span class="font-weight-bolder">Llegada:</span>
+									<span th:text="${#dates.format(reserva.fechaInicio, 'dd-MMM-yyyy')}"></span>
+								</div>
+								<div class="col-4">
+									<span class="font-weight-bolder">Salida:</span>
+									<span th:text="${#dates.format(reserva.fechaFin, 'dd-MMM-yyyy')}"></span>
+								</div>
+								<div class="col-4"></div>
+								<div class="col-4">
+									<span><i class="far fa-clock"></i></span>
+									<span th:text="${horain}"></span>
+								</div>
+								<div class="col-4">
+									<span><i class="far fa-clock"></i></span>
+									<span th:text="${horaout}"></span>
+								</div>
+								<div class="col-4"></div>
+								<div class="col-4 mt-2">
+									<span class="font-weight-bolder">Ocupacion:</span>
+									<span th:text="${piso.personas}"></span>&nbsp;<i class="fas fa-male"></i>
+								</div>
+		                    </div>
+		                    <hr>
+		                     
+		                    <div class="row"> 
+			                    <form method="get"  th:action="@{/reservas/pago}">
+			                    	<div class="col-12">
+				                    	<h3>Realizar el pago</h3>
+				                    </div>
+				                    <div class="col-12">
+				                    <div id="smart-button-container">
+						    <div style="text-align: center">
+						    <input name="amountInput" type="hidden" id="amount" th:value="${reserva.precioPagar}" ></div>
+						     <p id="descriptionError"></p><p id="priceLabelError" style="visibility: hidden;"></p><p id="invoiceidError" style="visibility: hidden;"></p>
+						    <div id="invoiceidDiv" style="text-align: center; display: none;"><label for="invoiceid"></label>
+						    	<input name="invoiceid" maxlength="127" type="hidden" id="invoiceid" th:value="${reserva.codigoReserva}"></div>
+						      
+						      <div style="text-align: center">
+						      <input type="hidden" name="descriptionInput" id="description" maxlength="127" th:value="${reserva.codigoReserva}"></div>
+						      
+						    <div style="text-align: center; margin-top: 0.625rem;" id="paypal-button-container"></div>
+						  </div>
+						  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=EUR" data-sdk-integration-source="button-factory"></script>
+						  <script>
+						  function initPayPalButton() {
+						    var description = document.querySelector('#smart-button-container #description');
+						    var amount = document.querySelector('#smart-button-container #amount');
+						    var descriptionError = document.querySelector('#smart-button-container #descriptionError');
+						    var priceError = document.querySelector('#smart-button-container #priceLabelError');
+						    var invoiceid = document.querySelector('#smart-button-container #invoiceid');
+						    var invoiceidError = document.querySelector('#smart-button-container #invoiceidError');
+						    var invoiceidDiv = document.querySelector('#smart-button-container #invoiceidDiv');
+						
+						    var elArr = [description, amount];
+						
+						    if (invoiceidDiv.firstChild.innerHTML.length > 1) {
+						      invoiceidDiv.style.display = "block";
+						    }
+						
+						    var purchase_units = [];
+						    purchase_units[0] = {};
+						    purchase_units[0].amount = {};
+						
+						    function validate(event) {
+						      return event.value.length > 0;
+						    }
+						
+						    paypal.Buttons({
+						      style: {
+						        color: 'gold',
+						        shape: 'rect',
+						        label: 'paypal',
+						        layout: 'vertical',
+						        
+						      },
+						
+						      onInit: function (data, actions) {
+						        actions.disable();
+						
+						        if(invoiceidDiv.style.display === "block") {
+						          elArr.push(invoiceid);
+						        }
+						
+						        elArr.forEach(function (item) {
+						          actions.enable();
+						          item.addEventListener('keyup', function (event) {
+						            var result = elArr.every(validate);
+						            if (result) {
+						              actions.enable();
+						            } else {
+						              actions.disable();
+						            }
+						          });
+						        });
+						      },
+						
+						      onClick: function () {
+						        if (description.value.length < 1) {
+						          descriptionError.style.visibility = "visible";
+						        } else {
+						          descriptionError.style.visibility = "hidden";
+						        }
+						
+						        if (amount.value.length < 1) {
+						          priceError.style.visibility = "visible";
+						        } else {
+						          priceError.style.visibility = "hidden";
+						        }
+						
+						        if (invoiceid.value.length < 1 && invoiceidDiv.style.display === "block") {
+						          invoiceidError.style.visibility = "visible";
+						        } else {
+						          invoiceidError.style.visibility = "hidden";
+						        }
+						
+						        purchase_units[0].description = description.value;
+						        purchase_units[0].amount.value = amount.value;
+						
+						        if(invoiceid.value !== '') {
+						          purchase_units[0].invoice_id = invoiceid.value;
+						        }
+						      },
+						
+						      createOrder: function (data, actions) {
+						        return actions.order.create({
+						          purchase_units: purchase_units,
+						        });
+						      },
+						
+						      onApprove: function (data, actions) {
+						        return actions.order.capture().then(function (details) {
+						        	window.location.replace("http://localhost:8080/reservas/pago?codigoReserva="+$("#invoiceid").val()+"&precioTotal="+$("#amount").val());
+						        });
+						      },
+						
+						      onError: function (err) {
+						    	  alert('Error');
+						      }
+						    }).render('#paypal-button-container');
+						  }
+						  initPayPalButton();
+						  </script>
+				                    </div>
+			                    </form>
+						</div>
+						<hr> 
+						<div class="row" th:if="${promocion != null}">
+							<div class="col-6">
+								<span class="font-weight-bolder">Promoción aplicada:</span>
+								<span th:text="${promocion.codigoPromocion}"></span>
+							</div>
+							<div class="col-6">
+								<span class="font-weight-bolder">Descuento:</span>
+								<span th:text="${promocion.valorDescuento}"></span>
+								<span>%</span>
+							</div>
+							<div class="col-10">
+								<span th:text="${promocion.textoPromocion}"></span>
+							</div>
+							<div class="col-10">
+								<button type="button" class="mt-4 btn btn-sm btn-primary" data-toggle="modal" data-target="#promoModal">Condiciones</button>
+							</div>
+						</div>
+						
+						
+						<hr th:if="${promocion != null}">
+						
+						<h3 class="mt-5"> Servicios incluidos en la reserva</h3>
+						<div class="container">
+							<div class="row" th:each="servicio: ${piso.servicios}">
+								<div class="col-1">
+									<h2><i th:classappend="${servicio.icono}+' pt-2'"></i></h2>
+								</div>
+								<div class="col-8">
+									<div th:switch="${idioma}"> 
+										<span th:case="'ES'" class="font-weight-bolder" th:text="${servicio.nombreServicio}"></span>
+										<span th:case="'EN'" class="font-weight-bolder" th:text="${servicio.nombreServicioEN}"></span>
+										<span th:case="'FR'" class="font-weight-bolder" th:text="${servicio.nombreServicioFR}"></span>
+										<span th:case="'DE'" class="font-weight-bolder" th:text="${servicio.nombreServicioDE}"></span>
+									</div>
+									
+									<div th:switch="${idioma}"> 
+										<p th:case="'ES'"  class="text-muted"  th:text="${servicio.descripcion}"></p>
+										<p th:case="'EN'"  class="text-muted"  th:text="${servicio.descripcionEN}"></p>
+										<p th:case="'FR'"  class="text-muted"  th:text="${servicio.descripcionFR}"></p>
+										<p th:case="'DE'"  class="text-muted"  th:text="${servicio.descripcionDE}"></p>
+									</div>
+								</div>
+							</div>
+						</div>
+					<hr class="my-3">
+						<div class="col-lg-11">
+							<i class="fas fa-home"></i><span class="font-weight-bolder small" th:text="#{text.reserva.alojamiento}"></span>
+							<p class="text-muted small" th:text="#{text.reserva.alojamiento.texto}"></p>
+							<i class="fas fa-broom small"></i><span class="font-weight-bolder small" th:text="#{text.reserva.limpieza}">Servicio de limpieza</span>
+							<p class="text-muted small" th:text="#{text.reserva.limpieza.texto}"><a href="#" th:text="#{text.reserva.masinformacion}"></a></p>
+						</div>
+					</div>
+					
+				
+				
+					<div class="col-lg-5">
+						<div class="card shadow rounded">
+							<div class="card-body">
+											<div class="card mb-2">
+												<div class="row no-gutters">
+													<div class="col-md-5 d-flex">
+														<img th:if="${#strings.length(foto.fotoImg) > 0}"
+															style="margin: 3px;" class="rounded card-img "
+															th:src="@{'/uploads/'+${foto.fotoImg}}"
+															th:alt="${foto.detalle}" />
+													</div>
+													
+													<div class="col-md-7">
+														<div class="card-body">
+															<h5 class="card-title mr-3" th:text="${piso.nombre}"></h5>
+															<i class="fas fa-male"></i><span th:text="'x'+${piso.personas}"></span>
+														    <span>&nbsp;&nbsp;&nbsp;</span>
+														    <i class="fas fa-bed"></i><span th:text="'x'+${piso.habitaciones}"></span>
+														    <span>&nbsp;&nbsp;&nbsp;</span>
+														    <i class="fas fa-bath"></i><span th:text="'x'+'2'"></span>
+															</p>
+														</div>
+													</div>
+												</div>
+									</div>			
+									<table class="table table-borderless">
+									<thead>
+										<tr>
+											<td colspan="2" class="font-weight-bold">DETALLES DEL PRECIO</td>
+										</tr>
+									</thead>
+									<tbody>
+									<tr>
+										<td>Total x <span  th:text="${noches}"></span> noches</td>
+											<td class="text-right" ><span th:text="${reserva.precioCalculado}"></span><span th:text="#{text.euro}"></span></td>
+										</tr>
+										<tr th:if="${promocion != null}">
+											<td th:text="#{text.reserva.descuento.texto}"></td>
+											<td class="text-right" >-<span th:text="${reserva.descuentoCalculado}"></span><span th:text="#{text.euro}"></span></td>
+										</tr>
+										
+										<tr>
+											<td th:text="#{text.reserva.tarifa.limpieza}"></td>
+											<td class="text-right"><span th:text="${piso.servicioLimpieza}"></span><span th:text="#{text.euro}"></span></td>
+										</tr>
+										<tr>
+											<td th:text="#{text.reserva.iva}"></td>
+											<td class="text-right"><span th:text="${reserva.ivaCalculado}"></span><span th:text="#{text.euro}"></span></td>
+										</tr>
+										<tr>
+											<td><h4 th:text="#{text.reserva.total}"></h4></td>
+											<td class="text-right"><span id="totalABS" th:text="${reserva.precioPagar}"></span><span th:text="#{text.euro}"></span></td>
+										</tr>
+									</tbody>
+							</table>							
+					</div>
+				</div>
+			</div>
+		</div>						
+	</div>
+</div>
+
+
+<div class="modal fade" id="promoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" th:if="${promocion != null}">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Condiciones de la promoción</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		       <div th:switch="${idioma}"> 
+					<p th:case="'ES'"  th:text="${promocion.basesLegales}"></p>
+					<p th:case="'EN'"  th:text="${promocion.basesLegalesEN}"></p>
+					<p th:case="'FR'"  th:text="${promocion.basesLegalesFR}"></p>
+					<p th:case="'DE'"  th:text="${promocion.basesLegalesDE}"></p>
+				</div>
+		      </div>
+		      
+		    </div>
+		  </div>
+		</div>
+</body>
+<!-- Añadimos las modales generales -->
+<div th:replace="layout/layout :: modalCondiciones"></div>
+
+<footer th:replace="layout/layout :: footer"></footer>
+<!-- Bootstrap core JavaScript -->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/hotel-datepicker/js/fecha.min.js}"></script>
+<script type="text/javascript" th:src="@{/hotel-datepicker/js/hotel-datepicker.min.js}"></script>
+<script type="text/javascript" th:src="@{/momentjs/downloads/moment.min.js}"></script>
