@@ -3,9 +3,9 @@ Este es un proyecto que desarrollé cuando me iniciaba en la programación de a
 
 Si quieres probar el funcionamiento de la aplicación puedes utilizar el archivo docker-compose de proyecto ejecutando 
 
-# "docker-compose up -d"
+"docker-compose up -d"
 
-La aplicación contiene ejemplos totalmente funcionales de:
+# La aplicación contiene ejemplos totalmente funcionales de:
 # Java
 -Spring Security: gestión y securización de rutas, acceso mediante usr y password, gestión de roles y filtrado en thymeleaf según roles, cambio de contraseña y envio por mail de link para el cambio a una nueva-SpringWeb: Gestión de plantillas con thymeleaf, múltiples ejemplos de comandos e instrucciones de thymeleaf, pequeño ejemplo de api rest, uso del Locale y gestión multi idioma, subida de imágenes con multipart, gestión de fragmentos de plantillas-Spring Jpa: ejemplos de acceso a datos y crud de varias tablas, gestión de creación del modelo desde las clases java, inicialización de los datos maestros a través de un script, consultas con jpql, paginación de datos con objetos tipos "Pageable"-Jobs Java: tareas programadas para ejecutar a través de jobs con @Scheduled-Emailing: gestión de
 
